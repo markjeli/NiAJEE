@@ -4,6 +4,9 @@ import com.jelinski.niajee.controller.servlet.exception.NotFoundException;
 import com.jelinski.niajee.crypto.component.Pbkdf2PasswordHash;
 import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.repository.api.UserRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 
 import java.io.*;
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.UUID;
 /**
  * Service layer for all business actions regarding user entity.
  */
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class UserService {
 
     /**
@@ -25,12 +30,16 @@ public class UserService {
      */
     private final Pbkdf2PasswordHash passwordHash;
 
+    /**
+     * Service for managing user portraits.
+     */
     private final UserPortraitService userPortraitService;
 
     /**
      * @param repository   repository for character entity
      * @param passwordHash hash mechanism used for storing users' passwords
      */
+    @Inject
     public UserService(UserRepository repository, Pbkdf2PasswordHash passwordHash, UserPortraitService userPortraitService) {
         this.repository = repository;
         this.passwordHash = passwordHash;

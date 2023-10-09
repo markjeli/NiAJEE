@@ -5,6 +5,7 @@ import com.jelinski.niajee.user.dto.GetUserResponse;
 import com.jelinski.niajee.user.dto.GetUsersResponse;
 import com.jelinski.niajee.user.dto.function.UsersToResponseFunction;
 import com.jelinski.niajee.user.entity.User;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.function.Function;
 
@@ -12,6 +13,7 @@ import java.util.function.Function;
  * Factor for creating {@link Function} implementation for converting between various objects used in different layers.
  * Instead of injecting multiple function objects single factory is injected.
  */
+@ApplicationScoped
 public class DtoFunctionFactory {
 
     /**

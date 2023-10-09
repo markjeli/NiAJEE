@@ -1,6 +1,7 @@
 package com.jelinski.niajee.controller.servlet;
 
 import com.jelinski.niajee.user.controller.api.UserController;
+import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
@@ -29,7 +30,7 @@ public class ApiServlet extends HttpServlet {
     /**
      * Controller for managing collections users' representations.
      */
-    private UserController userController;
+    private final UserController userController;
 
     /**
      * Definition of paths supported by this servlet. Separate inner class provides composition for static fields.
@@ -77,6 +78,11 @@ public class ApiServlet extends HttpServlet {
      */
     private final Jsonb jsonb = JsonbBuilder.create();
 
+    @Inject
+    public ApiServlet(UserController userController) {
+        this.userController = userController;
+    }
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getMethod().equals("PATCH")) {
@@ -84,12 +90,6 @@ public class ApiServlet extends HttpServlet {
         } else {
             super.service(request, response);
         }
-    }
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        userController = (UserController) getServletContext().getAttribute("userController");
     }
 
     @Override

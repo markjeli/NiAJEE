@@ -1,9 +1,12 @@
-package com.jelinski.niajee.configuration.listener;
+package com.jelinski.niajee.configuration.observer;
 
 import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.service.UserService;
-import jakarta.servlet.ServletContextEvent;
-import jakarta.servlet.ServletContextListener;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.context.control.RequestContextController;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
@@ -12,21 +15,36 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 /**
- * Listener started automatically on servlet context initialized. Fetches instance of the datasource from the servlet
- * context and fills it with default content. Normally this class would fetch database datasource and init data only in
- * cases of empty database. When using persistence storage application instance should be initialized only during first
- * run in order to init database with starting data. Good place to create first default admin user.
+ * Listener started automatically on CDI application context initialized. Injects proxy to the services and fills
+ * database with default content. When using persistence storage application instance should be initialized only during
+ * first run in order to init database with starting data. Good place to create first default admin user.
  */
-public class InitializedData implements ServletContextListener {
+@ApplicationScoped
+public class InitializedData {
 
     /**
      * User service.
      */
-    private UserService userService;
+    private final UserService userService;
 
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-        userService = (UserService) event.getServletContext().getAttribute("userService");
+    /**
+     * The CDI container provides a built-in instance of {@link RequestContextController} that is dependent scoped for
+     * the purposes of activating and deactivating.
+     */
+    private final RequestContextController requestContextController;
+
+    /**
+     *
+     * @param userService user service
+     * @param requestContextController CDI request context controller
+     */
+    @Inject
+    public InitializedData(UserService userService, RequestContextController requestContextController) {
+        this.userService = userService;
+        this.requestContextController = requestContextController;
+    }
+
+    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
         init();
     }
 
@@ -36,6 +54,8 @@ public class InitializedData implements ServletContextListener {
      */
     @SneakyThrows
     private void init() {
+        requestContextController.activate();// start request scope in order to inject request scoped repositories
+
         User admin = User.builder()
                 .id(UUID.fromString("c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
                 .login("admin")
@@ -81,6 +101,8 @@ public class InitializedData implements ServletContextListener {
         userService.create(kevin);
         userService.create(alice);
         userService.create(bob);
+
+        requestContextController.deactivate();
     }
 
     /**

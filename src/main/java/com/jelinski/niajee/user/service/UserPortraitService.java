@@ -2,21 +2,25 @@ package com.jelinski.niajee.user.service;
 
 import com.jelinski.niajee.controller.servlet.exception.NotFoundException;
 import com.jelinski.niajee.user.entity.User;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 
+@ApplicationScoped
 public class UserPortraitService {
     /**
      * Path to folder where portraits are stored.
      */
     private final String fileStorePath;
 
-    public UserPortraitService(String fileStorePath) {
-        this.fileStorePath = fileStorePath;
+    @Inject
+    public UserPortraitService() {
+        this.fileStorePath = "C:\\Users\\ThinkPad\\IdeaProjects\\NiAJEE\\upload";
     }
 
     public byte[] getPortrait(User user) throws IOException {

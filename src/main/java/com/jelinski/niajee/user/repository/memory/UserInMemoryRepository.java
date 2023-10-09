@@ -3,11 +3,17 @@ package com.jelinski.niajee.user.repository.memory;
 import com.jelinski.niajee.datastore.component.DataStore;
 import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.repository.api.UserRepository;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Repository for User entity. Repositories should be used in business layer (e.g.: in services).
+ */
+@RequestScoped
 public class UserInMemoryRepository implements UserRepository {
 
     /**
@@ -18,6 +24,7 @@ public class UserInMemoryRepository implements UserRepository {
     /**
      * @param store data store
      */
+    @Inject
     public UserInMemoryRepository(DataStore store) {
         this.store = store;
     }

@@ -5,14 +5,18 @@ import com.jelinski.niajee.controller.servlet.exception.NotFoundException;
 import com.jelinski.niajee.user.controller.api.UserController;
 import com.jelinski.niajee.user.dto.GetUserResponse;
 import com.jelinski.niajee.user.dto.GetUsersResponse;
-import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.service.UserService;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 
 import java.io.InputStream;
-import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Simple framework agnostic implementation of controller.
+ */
+@RequestScoped
 public class UserSimpleController implements UserController {
 
     /**
@@ -28,6 +32,7 @@ public class UserSimpleController implements UserController {
     /**
      * @param service user service
      */
+    @Inject
     public UserSimpleController(UserService service, DtoFunctionFactory factory) {
         this.service = service;
         this.factory = factory;
