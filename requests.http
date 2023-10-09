@@ -1,0 +1,42 @@
+# Get all users.
+
+GET http://localhost:9080/niajee/api/users
+
+###
+
+# Get single character.
+
+GET http://localhost:9080/niajee/api/users/ed6cfb2a-cad7-47dd-9b56-9d1e3c7a4197
+
+###
+
+# Get single user portrait.
+
+GET http://localhost:9080/niajee/api/users/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6/portrait
+
+###
+
+# Create character portrait.
+
+PUT http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1ea3/portrait
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="portrait"; filename="bob.png'
+
+< src/main/resources/com/jelinski/niajee/configuration/avatar/bob.png
+--boundary--
+
+###
+
+# Get single user portrait.
+
+GET http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1ea3/portrait
+
+###
+
+# Delete user's portrait.
+
+DELETE http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1ea3/portrait
+
+###
