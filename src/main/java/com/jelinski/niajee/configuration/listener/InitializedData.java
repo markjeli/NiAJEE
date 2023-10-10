@@ -6,6 +6,7 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import lombok.SneakyThrows;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -43,7 +44,6 @@ public class InitializedData implements ServletContextListener {
                 .birthDate(LocalDate.of(1990, 10, 21))
                 .email("admin@simplerpg.example.com")
                 .password("adminadmin")
-                .portrait(getResourceAsByteArray("../avatar/admin.png"))
                 .build();
 
         User kevin = User.builder()
@@ -54,7 +54,6 @@ public class InitializedData implements ServletContextListener {
                 .birthDate(LocalDate.of(2001, 1, 16))
                 .email("kevin@example.com")
                 .password("useruser")
-                .portrait(null)
                 .build();
 
         User alice = User.builder()
@@ -65,7 +64,6 @@ public class InitializedData implements ServletContextListener {
                 .birthDate(LocalDate.of(2002, 3, 19))
                 .email("alice@example.com")
                 .password("useruser")
-                .portrait(null)
                 .build();
 
         User bob = User.builder()
@@ -76,10 +74,10 @@ public class InitializedData implements ServletContextListener {
                 .birthDate(LocalDate.of(2003, 7, 12))
                 .email("bob@example.com")
                 .password("useruser")
-                .portrait(null)
                 .build();
 
         userService.create(admin);
+        userService.updatePortrait(admin.getId(), this.getClass().getResourceAsStream("../avatar/admin.png"));
         userService.create(kevin);
         userService.create(alice);
         userService.create(bob);

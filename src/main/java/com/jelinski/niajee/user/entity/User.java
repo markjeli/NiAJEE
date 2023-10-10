@@ -64,11 +64,9 @@ public class User implements Serializable {
     private String email;
 
     /**
-     * User's portrait. Images in database are stored as blobs (binary large objects).
+     * User's portrait path.
      */
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private byte[] portrait;
+    private String portraitPath;
 
     /**
      * User's list of owned motorcycles.

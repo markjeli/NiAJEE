@@ -1,5 +1,6 @@
 package com.jelinski.niajee.user.service;
 
+import com.jelinski.niajee.controller.servlet.exception.NotFoundException;
 import com.jelinski.niajee.crypto.component.Pbkdf2PasswordHash;
 import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.repository.api.UserRepository;
@@ -83,6 +84,25 @@ public class UserService {
     }
 
     /**
+     * Get user's portrait
+     *
+     * @param id user's id
+     * @return byte array containing user's portrait
+     */
+    public byte[] getPortrait(UUID id) {
+        Optional<User> user = repository.find(id);
+        if (user.isPresent()) {
+            try {
+                return userPortraitService.getPortrait(user.get());
+            } catch (IOException e) {
+                throw new NotFoundException(e);
+            }
+        } else {
+            throw new NotFoundException("User not found");
+        }
+    }
+
+    /**
      * Updates portrait of the user.
      *
      * @param id user's id
@@ -91,23 +111,27 @@ public class UserService {
     public void updatePortrait(UUID id, InputStream is) {
         repository.find(id).ifPresent(user -> {
             try {
-                user.setPortrait(is.readAllBytes());
-                userPortraitService.savePortrait(user);
+                byte[] portrait = is.readAllBytes();
+                userPortraitService.savePortrait(user, portrait);
                 repository.update(user);
-            } catch (IOException ex) {
-                throw new IllegalStateException(ex);
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
             }
         });
     }
 
     /**
      * Deletes portrait of the user.
+     *
      * @param id user's id
      */
     public void deletePortrait(UUID id) {
         repository.find(id).ifPresent(user -> {
-            user.setPortrait(null);
-            userPortraitService.deletePortrait(id);
+            try {
+                userPortraitService.deletePortrait(user);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             repository.update(user);
         });
     }

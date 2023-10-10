@@ -10,6 +10,7 @@ import com.jelinski.niajee.user.service.UserService;
 
 
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.UUID;
 
 public class UserSimpleController implements UserController {
@@ -46,9 +47,7 @@ public class UserSimpleController implements UserController {
 
     @Override
     public byte[] getUserPortrait(UUID id) {
-        return service.find(id)
-                .map(User::getPortrait)
-                .orElseThrow(NotFoundException::new);
+        return service.getPortrait(id);
     }
 
     @Override
