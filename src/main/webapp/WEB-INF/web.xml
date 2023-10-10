@@ -21,4 +21,9 @@
         <listener-class>com.jelinski.niajee.configuration.listener.CreateControllers</listener-class>
     </listener>
 
+    <context-param>
+        <param-name>portrait_path</param-name>
+        <param-value>C:\Users\ThinkPad\IdeaProjects\NiAJEE\upload</param-value>
+    </context-param>
+
 </web-app>

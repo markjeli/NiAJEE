@@ -4,6 +4,7 @@ import com.jelinski.niajee.crypto.component.Pbkdf2PasswordHash;
 import com.jelinski.niajee.datastore.component.DataStore;
 import com.jelinski.niajee.user.repository.api.UserRepository;
 import com.jelinski.niajee.user.repository.memory.UserInMemoryRepository;
+import com.jelinski.niajee.user.service.UserPortraitService;
 import com.jelinski.niajee.user.service.UserService;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -17,10 +18,11 @@ public class CreateServices implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         DataStore dataSource = (DataStore) event.getServletContext().getAttribute("datasource");
+        String filePath = event.getServletContext().getInitParameter("portrait_path");
 
         UserRepository userRepository = new UserInMemoryRepository(dataSource);
 
-        event.getServletContext().setAttribute("userService", new UserService(userRepository, new Pbkdf2PasswordHash()));
+        event.getServletContext().setAttribute("userService", new UserService(userRepository, new Pbkdf2PasswordHash(), new UserPortraitService(filePath)));
     }
 
 }

@@ -4,8 +4,7 @@ import com.jelinski.niajee.crypto.component.Pbkdf2PasswordHash;
 import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.repository.api.UserRepository;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,13 +24,16 @@ public class UserService {
      */
     private final Pbkdf2PasswordHash passwordHash;
 
+    private final UserPortraitService userPortraitService;
+
     /**
      * @param repository   repository for character entity
      * @param passwordHash hash mechanism used for storing users' passwords
      */
-    public UserService(UserRepository repository, Pbkdf2PasswordHash passwordHash) {
+    public UserService(UserRepository repository, Pbkdf2PasswordHash passwordHash, UserPortraitService userPortraitService) {
         this.repository = repository;
         this.passwordHash = passwordHash;
+        this.userPortraitService = userPortraitService;
     }
 
     /**
@@ -90,6 +92,7 @@ public class UserService {
         repository.find(id).ifPresent(user -> {
             try {
                 user.setPortrait(is.readAllBytes());
+                userPortraitService.savePortrait(user);
                 repository.update(user);
             } catch (IOException ex) {
                 throw new IllegalStateException(ex);
@@ -104,6 +107,7 @@ public class UserService {
     public void deletePortrait(UUID id) {
         repository.find(id).ifPresent(user -> {
             user.setPortrait(null);
+            userPortraitService.deletePortrait(id);
             repository.update(user);
         });
     }

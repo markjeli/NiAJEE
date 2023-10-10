@@ -16,7 +16,7 @@ GET http://localhost:9080/niajee/api/users/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6/
 
 ###
 
-# Create character portrait.
+# Create user portrait.
 
 PUT http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1ea3/portrait
 Content-Type: multipart/form-data; boundary=boundary
