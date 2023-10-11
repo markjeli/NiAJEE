@@ -40,3 +40,15 @@ GET http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1ea3/
 DELETE http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1ea3/portrait
 
 ###
+
+# Get all motorcycle types
+
+GET http://localhost:9080/niajee/api/motorcycleTypes
+
+###
+
+# Get single motorcycle type
+
+GET http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0
+
+###

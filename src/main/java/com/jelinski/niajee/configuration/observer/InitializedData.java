@@ -1,7 +1,10 @@
 package com.jelinski.niajee.configuration.observer;
 
+import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
+import com.jelinski.niajee.motorcycleType.entity.EnumMotorcycleType;
 import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.service.UserService;
+import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.context.control.RequestContextController;
@@ -28,19 +31,25 @@ public class InitializedData {
     private final UserService userService;
 
     /**
+     * Motorcycle type service.
+     */
+    private final MotorcycleTypeService motorcycleTypeService;
+
+    /**
      * The CDI container provides a built-in instance of {@link RequestContextController} that is dependent scoped for
      * the purposes of activating and deactivating.
      */
     private final RequestContextController requestContextController;
 
     /**
-     *
-     * @param userService user service
+     * @param userService              user service
      * @param requestContextController CDI request context controller
+     * @param motorcycleTypeService    motorcycle type service
      */
     @Inject
-    public InitializedData(UserService userService, RequestContextController requestContextController) {
+    public InitializedData(UserService userService, MotorcycleTypeService motorcycleTypeService, RequestContextController requestContextController) {
         this.userService = userService;
+        this.motorcycleTypeService = motorcycleTypeService;
         this.requestContextController = requestContextController;
     }
 
@@ -101,6 +110,32 @@ public class InitializedData {
         userService.create(kevin);
         userService.create(alice);
         userService.create(bob);
+
+        MotorcycleType naked = MotorcycleType.builder()
+                .id(UUID.fromString("47fc4252-9c4e-4b61-8042-05648be14bc0"))
+                .typeName("Naked")
+                .description("Naked motorcycles are stripped of all fairings and bodywork that normally hide the engine and inner workings of the bike, and are characterized by their high-mounted, wide handlebars and aggressive riding stance.")
+                .ridingPosition(EnumMotorcycleType.RidingPosition.UPRIGHT)
+                .build();
+
+        MotorcycleType sport = MotorcycleType.builder()
+                .id(UUID.fromString("fe6946e8-db8c-4ffe-ac7a-b457372e65aa"))
+                .typeName("Sport")
+                .description("Sport bikes are the speed machines of the motorcycle world. High-powered with sophisticated suspension systems and high-performance brakes, sport bikes typically are stuffed with the latest and greatest technology you can find on two wheels (or four).")
+                .ridingPosition(EnumMotorcycleType.RidingPosition.LEAN_FORWARD)
+                .build();
+
+        MotorcycleType cruiser = MotorcycleType.builder()
+                .id(UUID.fromString("bbb60000-1a7d-45cb-b6ac-3812c8f8eb3d"))
+                .typeName("Cruiser")
+                .description("Cruisers are modeled after large American machines from the 1930s to 1960s, such as those made by Harley-Davidson, Indian, and Excelsior-Henderson. They are characterized by their low seat heights, wide handlebars, and forward footpegs.")
+                .ridingPosition(EnumMotorcycleType.RidingPosition.LAID_BACK)
+                .build();
+
+
+        motorcycleTypeService.create(naked);
+        motorcycleTypeService.create(sport);
+        motorcycleTypeService.create(cruiser);
 
         requestContextController.deactivate();
     }
