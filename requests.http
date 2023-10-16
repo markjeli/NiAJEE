@@ -52,3 +52,15 @@ GET http://localhost:9080/niajee/api/motorcycleTypes
 GET http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0
 
 ###
+
+# Get all motorcycles
+
+GET http://localhost:9080/niajee/api/motorcycles
+
+###
+
+# Get single motorcycle
+
+GET http://localhost:9080/niajee/api/motorcycles/d8422238-ce90-4c9b-87ec-cd75f2bb32f3
+
+###

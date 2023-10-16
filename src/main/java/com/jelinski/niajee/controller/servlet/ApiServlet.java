@@ -1,5 +1,6 @@
 package com.jelinski.niajee.controller.servlet;
 
+import com.jelinski.niajee.motorcycle.controller.api.MotorcycleController;
 import com.jelinski.niajee.motorcycleType.controller.api.MotorcycleTypeController;
 import com.jelinski.niajee.user.controller.api.UserController;
 import jakarta.inject.Inject;
@@ -37,6 +38,11 @@ public class ApiServlet extends HttpServlet {
      * Controller for managing collections motorcycleTypes' representations.
      */
     private final MotorcycleTypeController motorcycleTypeController;
+
+    /**
+     * Controller for managing collections motorcycles' representations.
+     */
+    private final MotorcycleController motorcycleController;
 
     /**
      * Definition of paths supported by this servlet. Separate inner class provides composition for static fields.
@@ -85,6 +91,16 @@ public class ApiServlet extends HttpServlet {
          */
         public static final Pattern MOTORCYCLE_TYPE = Pattern.compile("/motorcycleTypes/(%s)".formatted(UUID.pattern()));
 
+        /**
+         * All motorcycles.
+         */
+        public static final Pattern MOTORCYCLES = Pattern.compile("/motorcycles/?");
+
+        /**
+         * Single motorcycle.
+         */
+        public static final Pattern MOTORCYCLE = Pattern.compile("/motorcycles/(%s)".formatted(UUID.pattern()));
+
     }
 
     /**
@@ -95,9 +111,10 @@ public class ApiServlet extends HttpServlet {
     private final Jsonb jsonb = JsonbBuilder.create();
 
     @Inject
-    public ApiServlet(UserController userController, MotorcycleTypeController motorcycleTypeController) {
+    public ApiServlet(UserController userController, MotorcycleTypeController motorcycleTypeController, MotorcycleController motorcycleController) {
         this.userController = userController;
         this.motorcycleTypeController = motorcycleTypeController;
+        this.motorcycleController = motorcycleController;
     }
 
     @Override
@@ -138,6 +155,15 @@ public class ApiServlet extends HttpServlet {
                 response.setContentType("application/json");
                 UUID uuid = extractUuid(Patterns.MOTORCYCLE_TYPE, path);
                 response.getWriter().write(jsonb.toJson(motorcycleTypeController.getMotorcycleType(uuid)));
+                return;
+            } else if (path.matches(Patterns.MOTORCYCLES.pattern())) {
+                response.setContentType("application/json");
+                response.getWriter().write(jsonb.toJson(motorcycleController.getMotorcycles()));
+                return;
+            } else if (path.matches(Patterns.MOTORCYCLE.pattern())) {
+                response.setContentType("application/json");
+                UUID uuid = extractUuid(Patterns.MOTORCYCLE, path);
+                response.getWriter().write(jsonb.toJson(motorcycleController.getMotorcycle(uuid)));
                 return;
             }
         }

@@ -1,34 +1,59 @@
-package com.jelinski.niajee.motorcycle.entity;
+package com.jelinski.niajee.motorcycle.dto;
 
-import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
-import com.jelinski.niajee.user.entity.User;
+import com.jelinski.niajee.motorcycle.entity.EnumMotorcycle;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
+/**
+ * Represents single motorcycle.
+ */
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString(callSuper = true)
-public class Motorcycle implements Serializable {
+@ToString
+@EqualsAndHashCode
+public class GetMotorcycleResponse {
+
     /**
-     * Unique id (primary key).
+     * Represents single motorcycle type.
+     */
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @ToString
+    @EqualsAndHashCode
+    public static class MotorcycleType {
+        /**
+         * Unique id identifying motorcycle type.
+         */
+        private UUID id;
+
+        /**
+         * Name of the motorcycle type.
+         */
+        private String typeName;
+    }
+
+    /**
+     * Unique id identifying motorcycle.
      */
     private UUID id;
 
     /**
-     * Motorcycle's name.
+     * Name of the motorcycle.
      */
     private String name;
 
@@ -63,20 +88,7 @@ public class Motorcycle implements Serializable {
     private int weight;
 
     /**
-     * Motorcycle's image. Images in database are stored as blobs (binary large objects).
-     */
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private byte[] image;
-
-    /**
      * Motorcycle's type.
      */
     private MotorcycleType motorcycleType;
-
-    /**
-     * Owner of this motorcycle.
-     */
-    private User user;
-
 }

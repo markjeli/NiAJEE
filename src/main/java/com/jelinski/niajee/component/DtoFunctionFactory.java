@@ -1,5 +1,7 @@
 package com.jelinski.niajee.component;
 
+import com.jelinski.niajee.motorcycle.dto.function.MotorcycleToResponseFunction;
+import com.jelinski.niajee.motorcycle.dto.function.MotorcyclesToResponseFunction;
 import com.jelinski.niajee.motorcycleType.dto.function.MotorcycleTypeToResponseFunction;
 import com.jelinski.niajee.motorcycleType.dto.GetMotorcycleTypeResponse;
 import com.jelinski.niajee.motorcycleType.dto.GetMotorcycleTypesResponse;
@@ -9,7 +11,11 @@ import com.jelinski.niajee.user.dto.function.UserToResponseFunction;
 import com.jelinski.niajee.user.dto.GetUserResponse;
 import com.jelinski.niajee.user.dto.GetUsersResponse;
 import com.jelinski.niajee.user.dto.function.UsersToResponseFunction;
+import com.jelinski.niajee.motorcycle.dto.GetMotorcycleResponse;
+import com.jelinski.niajee.motorcycle.dto.GetMotorcyclesResponse;
 import com.jelinski.niajee.user.entity.User;
+import com.jelinski.niajee.motorcycle.entity.Motorcycle;
+
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.function.Function;
@@ -53,6 +59,23 @@ public class DtoFunctionFactory {
      */
     public MotorcycleTypesToResponseFunction motorcycleTypesToResponse() {
         return new MotorcycleTypesToResponseFunction();
+    }
+
+    /**
+     * Returns a function to convert a single {@link Motorcycle} to {@link GetMotorcycleResponse}.
+     *
+     * @return MotorcycleToResponseFunction instance
+     */
+    public MotorcycleToResponseFunction motorcycleToResponse() {
+        return new MotorcycleToResponseFunction();
+    }
+
+    /**
+     * Returns a function to convert a list of {@link Motorcycle} to {@link GetMotorcyclesResponse}.
+     * @return MotorcyclesToResponseFunction instance
+     */
+    public MotorcyclesToResponseFunction motorcyclesToResponse() {
+        return new MotorcyclesToResponseFunction();
     }
 
 }

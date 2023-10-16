@@ -1,5 +1,8 @@
 package com.jelinski.niajee.configuration.observer;
 
+import com.jelinski.niajee.motorcycle.entity.EnumMotorcycle;
+import com.jelinski.niajee.motorcycle.entity.Motorcycle;
+import com.jelinski.niajee.motorcycle.service.MotorcycleService;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycleType.entity.EnumMotorcycleType;
 import com.jelinski.niajee.user.entity.User;
@@ -36,6 +39,11 @@ public class InitializedData {
     private final MotorcycleTypeService motorcycleTypeService;
 
     /**
+     * Motorcycle service.
+     */
+    private final MotorcycleService motorcycleService;
+
+    /**
      * The CDI container provides a built-in instance of {@link RequestContextController} that is dependent scoped for
      * the purposes of activating and deactivating.
      */
@@ -47,9 +55,15 @@ public class InitializedData {
      * @param motorcycleTypeService    motorcycle type service
      */
     @Inject
-    public InitializedData(UserService userService, MotorcycleTypeService motorcycleTypeService, RequestContextController requestContextController) {
+    public InitializedData(
+            UserService userService,
+            MotorcycleTypeService motorcycleTypeService,
+            MotorcycleService motorcycleService,
+            RequestContextController requestContextController
+    ) {
         this.userService = userService;
         this.motorcycleTypeService = motorcycleTypeService;
+        this.motorcycleService = motorcycleService;
         this.requestContextController = requestContextController;
     }
 
@@ -136,6 +150,52 @@ public class InitializedData {
         motorcycleTypeService.create(naked);
         motorcycleTypeService.create(sport);
         motorcycleTypeService.create(cruiser);
+
+        Motorcycle kawasaki = Motorcycle.builder()
+                .id(UUID.fromString("d8422238-ce90-4c9b-87ec-cd75f2bb32f3"))
+                .name("Kawasaki Z900")
+                .horsepower(125)
+                .color(EnumMotorcycle.Color.GREEN)
+                .brand(EnumMotorcycle.Brand.KAWASAKI)
+                .productionDate(LocalDate.of(2017, 1, 1))
+                .price(40000)
+                .weight(200)
+//                .image(getResourceAsByteArray("../motorcycle/kawasaki_z900.png"))
+                .motorcycleType(naked)
+                .user(alice)
+                .build();
+
+        Motorcycle yamaha = Motorcycle.builder()
+                .id(UUID.fromString("c2776082-6691-44e8-a9d9-1f405637d226"))
+                .name("Yamaha MT-09")
+                .horsepower(115)
+                .color(EnumMotorcycle.Color.BLUE)
+                .brand(EnumMotorcycle.Brand.YAMAHA)
+                .productionDate(LocalDate.of(2013, 1, 1))
+                .price(35000)
+                .weight(245)
+//                .image(getResourceAsByteArray("../motorcycle/yamaha_mt09.png"))
+                .motorcycleType(naked)
+                .user(bob)
+                .build();
+
+        Motorcycle honda = Motorcycle.builder()
+                .id(UUID.fromString("289b0034-2a5f-49e1-8701-81d5b3cf63b9"))
+                .name("Honda CBR 1000RR")
+                .horsepower(200)
+                .color(EnumMotorcycle.Color.RED)
+                .brand(EnumMotorcycle.Brand.HONDA)
+                .productionDate(LocalDate.of(2017, 1, 1))
+                .price(60000)
+                .weight(195)
+//                .image(getResourceAsByteArray("../motorcycle/honda_cbr1000rr.png"))
+                .motorcycleType(sport)
+                .user(kevin)
+                .build();
+
+        motorcycleService.create(kawasaki);
+        motorcycleService.create(yamaha);
+        motorcycleService.create(honda);
 
         requestContextController.deactivate();
     }
