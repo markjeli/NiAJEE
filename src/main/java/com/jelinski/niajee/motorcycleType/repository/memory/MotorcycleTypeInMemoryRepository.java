@@ -48,7 +48,7 @@ public class MotorcycleTypeInMemoryRepository implements MotorcycleTypeRepositor
 
     @Override
     public void delete(MotorcycleType entity) {
-        throw new UnsupportedOperationException("Operation not implemented.");
+        store.deleteMotorcycleType(entity.getId());
     }
 
     @Override

@@ -79,6 +79,12 @@ public class DataStore {
         motorcycleTypes.add(cloningUtility.clone(value));
     }
 
+    public synchronized void deleteMotorcycleType(UUID id) throws IllegalArgumentException {
+        if (!motorcycleTypes.removeIf(motorcycleType -> motorcycleType.getId().equals(id))) {
+            throw new IllegalArgumentException("The motorcycle type with id \"%s\" does not exist".formatted(id));
+        }
+    }
+
     /**
      * Seeks for all motorcycles.
      *

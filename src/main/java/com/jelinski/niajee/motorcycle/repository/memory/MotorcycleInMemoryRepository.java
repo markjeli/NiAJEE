@@ -3,12 +3,14 @@ package com.jelinski.niajee.motorcycle.repository.memory;
 import com.jelinski.niajee.datastore.component.DataStore;
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
+import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Repository for Motorcycle entity. Repositories should be used in business layer (e.g.: in services).
@@ -31,6 +33,13 @@ public class MotorcycleInMemoryRepository implements MotorcycleRepository {
     @Override
     public List<Motorcycle> findAll() {
         return store.findAllMotorcycles();
+    }
+
+    @Override
+    public List<Motorcycle> findAllByMotorcycleType(MotorcycleType motorcycleType) {
+        return store.findAllMotorcycles().stream()
+                .filter(motorcycle -> motorcycleType.equals(motorcycle.getMotorcycleType()))
+                .collect(Collectors.toList());
     }
 
     @Override

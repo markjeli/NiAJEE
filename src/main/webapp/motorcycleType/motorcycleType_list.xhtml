@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <ui:define name="content">
+
+        <article class="text--justified">
+            <header><h2>Motorcycle Types</h2></header>
+
+            <h:dataTable value="#{motorcycleTypeList.motorcycleTypes.motorcycleTypes}" var="motorcycleType"
+                         styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:outputText value="#{motorcycleType.typeName}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">View</f:facet>
+                    <h:link outcome="/motorcycle/motorcycle_list.xhtml" value="View">
+                        <f:param name="motorcycle-type-id" value="#{motorcycleType.id}"/>
+                    </h:link>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Delete</f:facet>
+                    <h:form>
+                        <h:commandButton styleClass="btn" value="Delete"
+                                         action="#{motorcycleTypeList.deleteAction(motorcycleType)}"/>
+                    </h:form>
+                </h:column>
+
+                <f:facet name="footer">
+                    <h:button styleClass="btn" outcome="/motorcycle/motorcycle_create.xhtml"
+                              value="Create new motorcycle"/>
+                </f:facet>
+            </h:dataTable>
+        </article>
+    </ui:define>
+
+</ui:composition>

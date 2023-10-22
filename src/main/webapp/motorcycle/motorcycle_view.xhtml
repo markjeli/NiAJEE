@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+   <f:metadata>
+      <f:viewParam name="id" value="#{motorcycleView.id}" required="true"/>
+      <f:viewAction action="#{motorcycleView.init()}"/>
+   </f:metadata>
+
+   <ui:define name="content">
+      <article>
+         <header><h2><h:outputText value="#{motorcycleView.motorcycle.name}"/></h2></header>
+         <div class="container">
+            <div class="row">
+               <div class="col-4">
+                  
+                  <div class="row mb-2">
+                     <div class="col-6">
+                        Name
+                     </div>
+                     <div class="col-6">
+                        <h:outputText value="#{motorcycleView.motorcycle.name}"/>
+                     </div>
+                  </div>
+
+                  <div class="row mb-2">
+                     <div class="col-6">
+                        Type
+                     </div>
+                     <div class="col-6">
+                        <h:outputText value="#{motorcycleView.motorcycle.type}"/>
+                     </div>
+                  </div>
+
+                  <div class="row mb-2">
+                     <div class="col-6">
+                        Price
+                     </div>
+                     <div class="col-6">
+                        <h:outputText value="#{motorcycleView.motorcycle.price}"/>
+                     </div>
+                  </div>
+
+                  <div class="row mb-2">
+                     <div class="col-6">
+                        Production Date
+                     </div>
+                     <div class="col-6">
+                        <h:outputText value="#{motorcycleView.motorcycle.productionDate}"/>
+                     </div>
+                  </div>
+
+                  <div class="row mb-2">
+                     <div class="col-6">
+                        Horsepower
+                     </div>
+                     <div class="col-6">
+                        <h:outputText value="#{motorcycleView.motorcycle.horsepower}"/>
+                     </div>
+                  </div>
+
+                  <div class="row mb-2">
+                     <div class="col-6">
+                        Color
+                     </div>
+                     <div class="col-6">
+                        <h:outputText value="#{motorcycleView.motorcycle.color}"/>
+                     </div>
+                  </div>
+
+                  <div class="row mb-2">
+                     <div class="col-6">
+                        Brand
+                     </div>
+                     <div class="col-6">
+                        <h:outputText value="#{motorcycleView.motorcycle.brand}"/>
+                     </div>
+                  </div>
+
+                  <div class="row mb-2">
+                     <div class="col-6">
+                        Weight
+                     </div>
+                     <div class="col-6">
+                        <h:outputText value="#{motorcycleView.motorcycle.weight}"/>
+                     </div>
+                  </div>
+
+               </div>
+
+<!--               <div class="col-3">-->
+<!--                  <h:graphicImage alt="Motorcycle portrait" styleClass="w-100"-->
+<!--                                  value="/api/characters/#{motorcycleView.id}/portrait"/>-->
+<!--               </div>-->
+            </div>
+         </div>
+      </article>
+   </ui:define>
+
+</ui:composition>

@@ -2,6 +2,7 @@ package com.jelinski.niajee.motorcycle.service;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
+import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepository;
 import com.jelinski.niajee.user.repository.api.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -61,6 +62,13 @@ public class MotorcycleService {
      */
     public List<Motorcycle> findAll() {
         return motorcycleRepository.findAll();
+    }
+
+    /**
+     * @return all available motorcycles by motorcycle type
+     */
+    public List<Motorcycle> findAll(MotorcycleType motorcycleType) {
+        return motorcycleRepository.findAllByMotorcycleType(motorcycleType);
     }
 
     /**

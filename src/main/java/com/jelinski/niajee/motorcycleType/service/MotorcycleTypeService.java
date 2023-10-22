@@ -1,5 +1,7 @@
 package com.jelinski.niajee.motorcycleType.service;
 
+import com.jelinski.niajee.motorcycle.entity.Motorcycle;
+import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,14 +22,21 @@ public class MotorcycleTypeService {
     /**
      * Repository for motorcycleType entity.
      */
-    private final MotorcycleTypeRepository repository;
+    private final MotorcycleTypeRepository motorcycleTypeRepository;
 
     /**
-     * @param repository repository for motorcycleType entity
+     * Repository for motorcycle entity.
+     */
+    private final MotorcycleRepository motorcycleRepository;
+
+    /**
+     * @param motorcycleTypeRepository repository for motorcycleType entity
+     * @param motorcycleRepository     repository for motorcycle entity
      */
     @Inject
-    public MotorcycleTypeService(MotorcycleTypeRepository repository) {
-        this.repository = repository;
+    public MotorcycleTypeService(MotorcycleTypeRepository motorcycleTypeRepository, MotorcycleRepository motorcycleRepository) {
+        this.motorcycleTypeRepository = motorcycleTypeRepository;
+        this.motorcycleRepository = motorcycleRepository;
     }
 
     /**
@@ -35,14 +44,14 @@ public class MotorcycleTypeService {
      * @return container with motorcycleType entity
      */
     public Optional<MotorcycleType> find(UUID id) {
-        return repository.find(id);
+        return motorcycleTypeRepository.find(id);
     }
 
     /**
      * @return all available motorcycleTypes
      */
     public List<MotorcycleType> findAll() {
-        return repository.findAll();
+        return motorcycleTypeRepository.findAll();
     }
 
     /**
@@ -51,6 +60,22 @@ public class MotorcycleTypeService {
      * @param motorcycleType new motorcycleType to be saved
      */
     public void create(MotorcycleType motorcycleType) {
-        repository.create(motorcycleType);
+        motorcycleTypeRepository.create(motorcycleType);
+    }
+
+    /**
+     * Deletes motorcycleType from the data store.
+     *
+     * @param id motorcycleType's id to be deleted
+     */
+    public void delete(UUID id) {
+        MotorcycleType motorcycleType = motorcycleTypeRepository.find(id).orElseThrow();
+        List<Motorcycle> motorcycles = motorcycleRepository.findAllByMotorcycleType(motorcycleType);
+        if (!motorcycles.isEmpty()) {
+            for (Motorcycle motorcycle : motorcycles) {
+                motorcycleRepository.delete(motorcycle);
+            }
+        }
+        motorcycleTypeRepository.delete(motorcycleType);
     }
 }
