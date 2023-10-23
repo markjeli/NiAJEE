@@ -81,6 +81,15 @@ public class MotorcycleService {
     }
 
     /**
+     * Updates existing motorcycle in the data store.
+     *
+     * @param motorcycle motorcycle to be updated
+     */
+    public void update(Motorcycle motorcycle) {
+        motorcycleRepository.update(motorcycle);
+    }
+
+    /**
      * Deletes motorcycle from the data store.
      *
      * @param id motorcycle's id

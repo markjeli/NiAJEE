@@ -1,7 +1,10 @@
 package com.jelinski.niajee.component;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
+import com.jelinski.niajee.motorcycle.model.function.MotorcycleToEditModelFunction;
 import com.jelinski.niajee.motorcycle.model.function.MotorcycleToModelFunction;
+import com.jelinski.niajee.motorcycle.model.MotorcycleEditModel;
+import com.jelinski.niajee.motorcycle.model.function.UpdateMotorcycleWithModelFunction;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycle.model.function.MotorcyclesToModelFunction;
 import com.jelinski.niajee.motorcycle.model.MotorcyclesModel;
@@ -43,5 +46,23 @@ public class ModelFunctionFactory {
      */
     public MotorcycleToModelFunction motorcycleToModel() {
         return new MotorcycleToModelFunction();
+    }
+
+    /**
+     * Returns a function to convert a single {@link Motorcycle} to {@link MotorcycleEditModel}.
+     *
+     * @return new instance
+     */
+    public MotorcycleToEditModelFunction motorcycleToEditModel() {
+        return new MotorcycleToEditModelFunction();
+    }
+
+    /**
+     * Returns a function to convert a single {@link MotorcycleEditModel} to {@link Motorcycle}.
+     *
+     * @return UpdateMotorcycleFunction instance
+     */
+    public UpdateMotorcycleWithModelFunction updateMotorcycle() {
+        return new UpdateMotorcycleWithModelFunction();
     }
 }
