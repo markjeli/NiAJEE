@@ -53,6 +53,17 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
+                            <h:inputText id="productionDate" value="#{motorcycleCreate.motorcycle.productionDate}" styleClass="form-control">
+                                <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                            </h:inputText>
+                            <h:outputLabel for="productionDate" value="Production Date:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
                             Color:
                             <h:selectOneMenu value="#{motorcycleCreate.motorcycle.color}">
                                 <f:selectItems value="#{motorcycleCreate.colors}" />
