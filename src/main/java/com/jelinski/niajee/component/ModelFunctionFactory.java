@@ -1,13 +1,11 @@
 package com.jelinski.niajee.component;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
-import com.jelinski.niajee.motorcycle.model.function.MotorcycleToEditModelFunction;
-import com.jelinski.niajee.motorcycle.model.function.MotorcycleToModelFunction;
+import com.jelinski.niajee.motorcycle.model.function.*;
 import com.jelinski.niajee.motorcycle.model.MotorcycleEditModel;
-import com.jelinski.niajee.motorcycle.model.function.UpdateMotorcycleWithModelFunction;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
-import com.jelinski.niajee.motorcycle.model.function.MotorcyclesToModelFunction;
 import com.jelinski.niajee.motorcycle.model.MotorcyclesModel;
+import com.jelinski.niajee.motorcycleType.model.function.MotorcycleTypeToModelFunction;
 import com.jelinski.niajee.motorcycleType.model.function.MotorcycleTypesToModelFunction;
 import com.jelinski.niajee.motorcycleType.model.MotorcycleTypesModel;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -28,6 +26,15 @@ public class ModelFunctionFactory {
      */
     public MotorcyclesToModelFunction motorcyclesToModel() {
         return new MotorcyclesToModelFunction();
+    }
+
+    /**
+     * Returns a function to convert a single {@link MotorcycleType} to {@link com.jelinski.niajee.motorcycleType.model.MotorcycleTypeModel}.
+     *
+     * @return new instance
+     */
+    public MotorcycleTypeToModelFunction motorcycleTypeToModel() {
+        return new MotorcycleTypeToModelFunction();
     }
 
     /**
@@ -64,5 +71,14 @@ public class ModelFunctionFactory {
      */
     public UpdateMotorcycleWithModelFunction updateMotorcycle() {
         return new UpdateMotorcycleWithModelFunction();
+    }
+
+    /**
+     * Returns a function to convert a single {@link Motorcycle} to {@link Motorcycle}.
+     *
+     * @return ModelToMotorcycleFunction instance
+     */
+    public ModelToMotorcycleFunction modelToMotorcycle() {
+        return new ModelToMotorcycleFunction();
     }
 }

@@ -1,11 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
-</html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{motorcycleCreate.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2>Create motorcycle</h2></header>
+            <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="name" value="#{motorcycleCreate.motorcycle.name}" styleClass="form-control"/>
+                            <h:outputLabel for="name" value="Name:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="horsepower" value="#{motorcycleCreate.motorcycle.horsepower}" styleClass="form-control"/>
+                            <h:outputLabel for="horsepower" value="Horsepower:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="price" value="#{motorcycleCreate.motorcycle.price}" styleClass="form-control"/>
+                            <h:outputLabel for="price" value="Price:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="weight" value="#{motorcycleCreate.motorcycle.weight}" styleClass="form-control"/>
+                            <h:outputLabel for="weight" value="Weight:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            Color:
+                            <h:selectOneMenu value="#{motorcycleCreate.motorcycle.color}">
+                                <f:selectItems value="#{motorcycleCreate.colors}" />
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            Brand:
+                            <h:selectOneMenu value="#{motorcycleCreate.motorcycle.brand}">
+                                <f:selectItems value="#{motorcycleCreate.brands}" />
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <fieldset>
+                            <legend class="form-label fs-6">Motorcycle Type:</legend>
+                            <!-- Instead of ui:repeat the h:selectOneRadio with f:selectItems can be used but then
+                            Faces renders table or list and custom styling with CSS libraties can be troublesome. -->
+<!--                            <ui:repeat value="#{motorcycleCreate.motorcycleTypes}" var="motorcycleType">-->
+<!--                                <div class="form-check">-->
+<!--                                    <h:selectOneRadio id="radioId" group="motorcycleeType"-->
+<!--                                                      value="#{motorcycleCreate.motorcycle.motorcycleType}"-->
+<!--                                                      styleClass="form-check-input"-->
+<!--                                                      enabledClass="form-check-label">-->
+<!--                                        <f:selectItem itemValue="#{motorcycleType}" itemLabel="#{motorcycleType.typeName}"/>-->
+<!--                                    </h:selectOneRadio>-->
+<!--                                </div>-->
+<!--                            </ui:repeat>-->
+                            <h:selectOneMenu value="#{motorcycleCreate.motorcycle.motorcycleType}">
+                                <f:selectItems value="#{motorcycleCreate.motorcycleTypes}" var="motorcycleType" itemValue="#{motorcycleType}" itemLabel="#{motorcycleType.typeName}"/>
+                            </h:selectOneMenu>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-primary" value="Create" action="#{motorcycleCreate.saveAction()}"/>
+                    </div>
+                    <div class="col-2 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-secondary" value="Cancel" action="#{motorcycleCreate.cancelAction()}"/>
+                    </div>
+                </div>
+            </h:form>
+        </article>
+    </ui:define>
+
+</ui:composition>
