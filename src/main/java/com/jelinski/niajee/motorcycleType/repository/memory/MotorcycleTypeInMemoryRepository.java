@@ -53,6 +53,6 @@ public class MotorcycleTypeInMemoryRepository implements MotorcycleTypeRepositor
 
     @Override
     public void update(MotorcycleType entity) {
-        throw new UnsupportedOperationException("Operation not implemented.");
+        store.updateMotorcycleType(entity);
     }
 }

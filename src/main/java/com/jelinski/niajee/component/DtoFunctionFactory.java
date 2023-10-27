@@ -6,6 +6,8 @@ import com.jelinski.niajee.motorcycleType.dto.function.MotorcycleTypeToResponseF
 import com.jelinski.niajee.motorcycleType.dto.GetMotorcycleTypeResponse;
 import com.jelinski.niajee.motorcycleType.dto.GetMotorcycleTypesResponse;
 import com.jelinski.niajee.motorcycleType.dto.function.MotorcycleTypesToResponseFunction;
+import com.jelinski.niajee.motorcycleType.dto.function.RequestToMotorcycleTypeFunction;
+import com.jelinski.niajee.motorcycleType.dto.function.UpdateMotorcycleTypeWithRequestFunction;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.user.dto.function.UserToResponseFunction;
 import com.jelinski.niajee.user.dto.GetUserResponse;
@@ -62,6 +64,24 @@ public class DtoFunctionFactory {
     }
 
     /**
+     * Returns a function to convert a single {@link MotorcycleType} to {@link GetMotorcycleTypeResponse}.
+     *
+     * @return MotorcycleTypeToResponseFunction instance
+     */
+    public RequestToMotorcycleTypeFunction requestToMotorcycleType() {
+        return new RequestToMotorcycleTypeFunction();
+    }
+
+    /**
+     * Returns a function to convert a single {@link MotorcycleType} to {@link GetMotorcycleTypeResponse}.
+     *
+     * @return UpdateMotorcycleTypeWithRequestFunction instance
+     */
+    public UpdateMotorcycleTypeWithRequestFunction updateMotorcycleType() {
+        return new UpdateMotorcycleTypeWithRequestFunction();
+    }
+
+    /**
      * Returns a function to convert a single {@link Motorcycle} to {@link GetMotorcycleResponse}.
      *
      * @return MotorcycleToResponseFunction instance
@@ -72,6 +92,7 @@ public class DtoFunctionFactory {
 
     /**
      * Returns a function to convert a list of {@link Motorcycle} to {@link GetMotorcyclesResponse}.
+     *
      * @return MotorcyclesToResponseFunction instance
      */
     public MotorcyclesToResponseFunction motorcyclesToResponse() {

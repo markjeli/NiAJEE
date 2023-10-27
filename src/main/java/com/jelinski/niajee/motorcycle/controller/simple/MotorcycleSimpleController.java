@@ -1,8 +1,6 @@
 package com.jelinski.niajee.motorcycle.controller.simple;
 
 import com.jelinski.niajee.component.DtoFunctionFactory;
-import com.jelinski.niajee.controller.servlet.exception.BadRequestException;
-import com.jelinski.niajee.controller.servlet.exception.NotFoundException;
 import com.jelinski.niajee.motorcycle.controller.api.MotorcycleController;
 import com.jelinski.niajee.motorcycle.dto.GetMotorcycleResponse;
 import com.jelinski.niajee.motorcycle.dto.GetMotorcyclesResponse;
@@ -10,6 +8,7 @@ import com.jelinski.niajee.motorcycle.dto.function.PutMotorcycleRequest;
 import com.jelinski.niajee.motorcycle.service.MotorcycleService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.UUID;
 

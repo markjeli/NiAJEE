@@ -64,6 +64,15 @@ public class MotorcycleTypeService {
     }
 
     /**
+     * Updates motorcycleType in the data store.
+     *
+     * @param motorcycleType motorcycleType to be updated
+     */
+    public void update(MotorcycleType motorcycleType) {
+        motorcycleTypeRepository.update(motorcycleType);
+    }
+
+    /**
      * Deletes motorcycleType from the data store.
      *
      * @param id motorcycleType's id to be deleted

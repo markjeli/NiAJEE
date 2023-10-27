@@ -53,6 +53,36 @@ GET http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-056
 
 ###
 
+# Create new motorcycle type
+
+PUT http://localhost:9080/niajee/api/motorcycleTypes/8d48d3fb-ffde-4646-bb58-0e59a2909952
+Content-Type: application/json
+
+{
+  "typeName": "Scooter",
+  "description": "Scooters are popular for personal transportation partly due to being more affordable, easy to operate, convenient to park and store. Licensing requirements for scooters are easier and cheaper than for cars in most parts of the world, and insurance is usually cheaper.",
+  "ridingPosition": "UPRIGHT"
+}
+
+###
+
+# Update existing motorcycle type
+
+PATCH http://localhost:9080/niajee/api/motorcycleTypes/bbb60000-1a7d-45cb-b6ac-3812c8f8eb3d
+Content-Type: application/json
+
+{
+  "typeName": "Changed",
+  "description": "Changed"
+}
+
+###
+
+# Delete existing motorcycle type
+DELETE http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0
+
+###
+
 # Get all motorcycles
 
 GET http://localhost:9080/niajee/api/motorcycles

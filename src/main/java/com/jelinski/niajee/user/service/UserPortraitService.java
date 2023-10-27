@@ -1,10 +1,10 @@
 package com.jelinski.niajee.user.service;
 
-import com.jelinski.niajee.controller.servlet.exception.NotFoundException;
 import com.jelinski.niajee.user.entity.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
+import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;

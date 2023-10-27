@@ -1,13 +1,13 @@
 package com.jelinski.niajee.user.controller.simple;
 
 import com.jelinski.niajee.component.DtoFunctionFactory;
-import com.jelinski.niajee.controller.servlet.exception.NotFoundException;
 import com.jelinski.niajee.user.controller.api.UserController;
 import com.jelinski.niajee.user.dto.GetUserResponse;
 import com.jelinski.niajee.user.dto.GetUsersResponse;
 import com.jelinski.niajee.user.service.UserService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 
 
 import java.io.InputStream;

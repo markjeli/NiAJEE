@@ -1,11 +1,11 @@
 package com.jelinski.niajee.user.service;
 
-import com.jelinski.niajee.controller.servlet.exception.NotFoundException;
 import com.jelinski.niajee.crypto.component.Pbkdf2PasswordHash;
 import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.repository.api.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 
 import java.io.*;
