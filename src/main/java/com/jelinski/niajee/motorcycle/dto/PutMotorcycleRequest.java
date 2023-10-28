@@ -1,32 +1,25 @@
-package com.jelinski.niajee.motorcycle.entity;
+package com.jelinski.niajee.motorcycle.dto;
 
-import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
-import com.jelinski.niajee.user.entity.User;
+import com.jelinski.niajee.motorcycle.entity.EnumMotorcycle;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
-
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString(callSuper = true)
-public class Motorcycle implements Serializable {
-    /**
-     * Unique id (primary key).
-     */
-    private UUID id;
-
+@ToString
+@EqualsAndHashCode
+public class PutMotorcycleRequest {
     /**
      * Motorcycle's name.
      */
@@ -61,15 +54,5 @@ public class Motorcycle implements Serializable {
      * Motorcycle's weight.
      */
     private int weight;
-
-    /**
-     * Motorcycle's type.
-     */
-    private MotorcycleType motorcycleType;
-
-    /**
-     * Owner of this motorcycle.
-     */
-    private User user;
 
 }

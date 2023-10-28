@@ -71,6 +71,11 @@ public class MotorcycleService {
         return motorcycleRepository.findAllByMotorcycleType(motorcycleType);
     }
 
+    public Optional<List<Motorcycle>> findAllByMotorcycleType(UUID id) {
+        return motorcycleTypeRepository.find(id)
+                .map(motorcycleRepository::findAllByMotorcycleType);
+    }
+
     /**
      * Stores new motorcycle in the data store.
      *

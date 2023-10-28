@@ -1,7 +1,8 @@
 package com.jelinski.niajee.component;
 
-import com.jelinski.niajee.motorcycle.dto.function.MotorcycleToResponseFunction;
-import com.jelinski.niajee.motorcycle.dto.function.MotorcyclesToResponseFunction;
+import com.jelinski.niajee.motorcycle.dto.PatchMotorcycleRequest;
+import com.jelinski.niajee.motorcycle.dto.PutMotorcycleRequest;
+import com.jelinski.niajee.motorcycle.dto.function.*;
 import com.jelinski.niajee.motorcycleType.dto.function.MotorcycleTypeToResponseFunction;
 import com.jelinski.niajee.motorcycleType.dto.GetMotorcycleTypeResponse;
 import com.jelinski.niajee.motorcycleType.dto.GetMotorcycleTypesResponse;
@@ -98,5 +99,24 @@ public class DtoFunctionFactory {
     public MotorcyclesToResponseFunction motorcyclesToResponse() {
         return new MotorcyclesToResponseFunction();
     }
+
+    /**
+     * Returns a function to convert a single {@link PutMotorcycleRequest} to {@link Motorcycle}.
+     *
+     * @return RequestToMotorcycleFunction instance
+     */
+    public RequestToMotorcycleFunction requestToMotorcycle() {
+        return new RequestToMotorcycleFunction();
+    }
+
+    /**
+     * Returns a function to convert a single {@link PatchMotorcycleRequest} to {@link Motorcycle}.
+     *
+     * @return RequestToMotorcycleFunction instance
+     */
+    public UpdateMotorcycleWithRequestFunction updateMotorcycle() {
+        return new UpdateMotorcycleWithRequestFunction();
+    }
+
 
 }
