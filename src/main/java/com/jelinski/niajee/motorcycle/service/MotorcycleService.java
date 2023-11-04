@@ -7,6 +7,7 @@ import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepositor
 import com.jelinski.niajee.user.repository.api.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -81,7 +82,14 @@ public class MotorcycleService {
      *
      * @param motorcycle new motorcycle to be saved
      */
+    @Transactional
     public void create(Motorcycle motorcycle) {
+        if (motorcycleRepository.find(motorcycle.getId()).isPresent()) {
+            throw new IllegalArgumentException("Motorcycle already exists");
+        }
+        if (motorcycleTypeRepository.find(motorcycle.getMotorcycleType().getId()).isEmpty()) {
+            throw new IllegalArgumentException("Motorcycle type does not exist");
+        }
         motorcycleRepository.create(motorcycle);
     }
 
@@ -90,6 +98,7 @@ public class MotorcycleService {
      *
      * @param motorcycle motorcycle to be updated
      */
+    @Transactional
     public void update(Motorcycle motorcycle) {
         motorcycleRepository.update(motorcycle);
     }
@@ -99,6 +108,7 @@ public class MotorcycleService {
      *
      * @param id motorcycle's id
      */
+    @Transactional
     public void delete(UUID id) {
         motorcycleRepository.delete(motorcycleRepository.find(id).orElseThrow());
     }

@@ -1,10 +1,9 @@
 package com.jelinski.niajee.motorcycleType.service;
 
-import com.jelinski.niajee.motorcycle.entity.Motorcycle;
-import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepository;
 
@@ -22,21 +21,15 @@ public class MotorcycleTypeService {
     /**
      * Repository for motorcycleType entity.
      */
-    private final MotorcycleTypeRepository motorcycleTypeRepository;
+    private final MotorcycleTypeRepository repository;
+
 
     /**
-     * Repository for motorcycle entity.
-     */
-    private final MotorcycleRepository motorcycleRepository;
-
-    /**
-     * @param motorcycleTypeRepository repository for motorcycleType entity
-     * @param motorcycleRepository     repository for motorcycle entity
+     * @param repository repository for motorcycleType entity
      */
     @Inject
-    public MotorcycleTypeService(MotorcycleTypeRepository motorcycleTypeRepository, MotorcycleRepository motorcycleRepository) {
-        this.motorcycleTypeRepository = motorcycleTypeRepository;
-        this.motorcycleRepository = motorcycleRepository;
+    public MotorcycleTypeService(MotorcycleTypeRepository repository) {
+        this.repository = repository;
     }
 
     /**
@@ -44,14 +37,14 @@ public class MotorcycleTypeService {
      * @return container with motorcycleType entity
      */
     public Optional<MotorcycleType> find(UUID id) {
-        return motorcycleTypeRepository.find(id);
+        return repository.find(id);
     }
 
     /**
      * @return all available motorcycleTypes
      */
     public List<MotorcycleType> findAll() {
-        return motorcycleTypeRepository.findAll();
+        return repository.findAll();
     }
 
     /**
@@ -59,8 +52,9 @@ public class MotorcycleTypeService {
      *
      * @param motorcycleType new motorcycleType to be saved
      */
+    @Transactional
     public void create(MotorcycleType motorcycleType) {
-        motorcycleTypeRepository.create(motorcycleType);
+        repository.create(motorcycleType);
     }
 
     /**
@@ -68,8 +62,9 @@ public class MotorcycleTypeService {
      *
      * @param motorcycleType motorcycleType to be updated
      */
+    @Transactional
     public void update(MotorcycleType motorcycleType) {
-        motorcycleTypeRepository.update(motorcycleType);
+        repository.update(motorcycleType);
     }
 
     /**
@@ -77,14 +72,9 @@ public class MotorcycleTypeService {
      *
      * @param id motorcycleType's id to be deleted
      */
+    @Transactional
     public void delete(UUID id) {
-        MotorcycleType motorcycleType = motorcycleTypeRepository.find(id).orElseThrow();
-        List<Motorcycle> motorcycles = motorcycleRepository.findAllByMotorcycleType(motorcycleType);
-        if (!motorcycles.isEmpty()) {
-            for (Motorcycle motorcycle : motorcycles) {
-                motorcycleRepository.delete(motorcycle);
-            }
-        }
-        motorcycleTypeRepository.delete(motorcycleType);
+        repository.delete(repository.find(id).orElseThrow());
     }
+
 }

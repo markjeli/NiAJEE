@@ -5,6 +5,7 @@ import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.repository.api.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 
@@ -76,6 +77,7 @@ public class UserService {
      *
      * @param user new user to be saved
      */
+    @Transactional
     public void create(User user) {
         user.setPassword(passwordHash.generate(user.getPassword().toCharArray()));
         repository.create(user);
@@ -117,6 +119,7 @@ public class UserService {
      * @param id user's id
      * @param is input stream containing new portrait
      */
+    @Transactional
     public void updatePortrait(UUID id, InputStream is) {
         repository.find(id).ifPresent(user -> {
             try {
@@ -134,6 +137,7 @@ public class UserService {
      *
      * @param id user's id
      */
+    @Transactional
     public void deletePortrait(UUID id) {
         repository.find(id).ifPresent(user -> {
             try {

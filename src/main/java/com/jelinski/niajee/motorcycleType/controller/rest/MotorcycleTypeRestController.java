@@ -9,6 +9,7 @@ import com.jelinski.niajee.motorcycleType.dto.PutMotorcycleTypeRequest;
 import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.Path;
@@ -18,13 +19,16 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 /**
  * Simple framework agnostic implementation of controller.
  */
 @Path("")
+@Log
 public class MotorcycleTypeRestController implements MotorcycleTypeController {
 
     /**
@@ -91,8 +95,12 @@ public class MotorcycleTypeRestController implements MotorcycleTypeController {
                     .build(id)
                     .toString());
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (IllegalArgumentException e) {
-            throw new BadRequestException(e);
+        } catch (TransactionalException ex) {
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
+            throw ex;
         }
     }
 

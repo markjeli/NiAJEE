@@ -1,6 +1,7 @@
 package com.jelinski.niajee.user.entity;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -26,10 +27,13 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
+@Entity
+@Table(name = "users")
 public class User implements Serializable {
     /**
      * Unique id (primary key).
      */
+    @Id
     private UUID id;
 
     /**
@@ -50,6 +54,7 @@ public class User implements Serializable {
     /**
      * User's birthdate.
      */
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
     /**
@@ -61,16 +66,21 @@ public class User implements Serializable {
     /**
      * User's contact email.
      */
+    @Column(nullable = false, unique = true)
     private String email;
 
     /**
      * User's portrait path.
      */
+    @Column(name = "portrait_path")
     private String portraitPath;
 
     /**
      * User's list of owned motorcycles.
      */
+    @ToString.Exclude//It's common to exclude lists from toString
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Motorcycle> motorcycleList;
 
 }

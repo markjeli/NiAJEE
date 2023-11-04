@@ -1,6 +1,7 @@
 package com.jelinski.niajee.motorcycleType.entity;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,16 +22,20 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
+@Entity
+@Table(name = "motorcycle_types")
 public class MotorcycleType implements Serializable {
 
     /**
      * Unique id (primary key).
      */
+    @Id
     private UUID id;
 
     /**
      * Name of the motorcycle type.
      */
+    @Column(name = "type_name")
     private String typeName;
 
     /**
@@ -41,11 +46,16 @@ public class MotorcycleType implements Serializable {
     /**
      * Riding position of the motorcycle type.
      */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "riding_position")
     private EnumMotorcycleType.RidingPosition ridingPosition;
 
     /**
      * List of motorcycles of this type.
      */
+    @ToString.Exclude//It's common to exclude lists from toString
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "motorcycleType", cascade = CascadeType.REMOVE)
     List<Motorcycle> motorcycles;
 
 }
