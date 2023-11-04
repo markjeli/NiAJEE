@@ -76,12 +76,13 @@ public class MotorcycleList {
      */
     public MotorcyclesModel getMotorcycles() {
         if (motorcycles == null) {
-            Optional<MotorcycleType> motorcycleType = motorcycleTypeService.find(motorcycleTypeId);
-            if (motorcycleType.isPresent()) {
+            if (motorcycleTypeId != null) {
+                Optional<MotorcycleType> motorcycleType = motorcycleTypeService.find(motorcycleTypeId);
                 motorcycles = factory.motorcyclesToModel().apply(motorcycleService.findAll(motorcycleType.get()));
             } else {
                 motorcycles = factory.motorcyclesToModel().apply(motorcycleService.findAll());
             }
+
         }
         return motorcycles;
     }
