@@ -84,7 +84,7 @@ public class MotorcycleRestController implements MotorcycleController {
     }
 
     @Override
-    public GetMotorcyclesResponse getMotorcycleTypeMotorcycle(UUID id) {
+    public GetMotorcyclesResponse getMotorcycleTypeMotorcycles(UUID id) {
         return motorcycleService.findAllByMotorcycleType(id)
                 .map(factory.motorcyclesToResponse())
                 .orElseThrow(NotFoundException::new);
@@ -95,6 +95,18 @@ public class MotorcycleRestController implements MotorcycleController {
         return motorcycleService.find(id)
                 .map(factory.motorcycleToResponse())
                 .orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public GetMotorcycleResponse getMotorcycleTypeMotorcycle(UUID typeId, UUID id) {
+        try {
+            motorcycleTypeService.find(typeId).orElseThrow(NotFoundException::new);
+            return motorcycleService.find(id)
+                    .map(factory.motorcycleToResponse())
+                    .orElseThrow(NotFoundException::new);
+        } catch (IllegalArgumentException ex) {
+            throw new BadRequestException(ex);
+        }
     }
 
     @Override

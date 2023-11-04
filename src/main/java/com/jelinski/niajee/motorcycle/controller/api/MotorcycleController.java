@@ -31,7 +31,7 @@ public interface MotorcycleController {
     @GET
     @Path("/motorcycleTypes/{id}/motorcycles")
     @Produces(MediaType.APPLICATION_JSON)
-    GetMotorcyclesResponse getMotorcycleTypeMotorcycle(@PathParam("id") UUID id);
+    GetMotorcyclesResponse getMotorcycleTypeMotorcycles(@PathParam("id") UUID id);
 
     /**
      * @param id motorcycle's id
@@ -41,6 +41,16 @@ public interface MotorcycleController {
     @Path("/motorcycles/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     GetMotorcycleResponse getMotorcycle(@PathParam("id") UUID id);
+
+    /**
+     * @param typeId motorcycleType's id
+     * @param id motorcycle's id
+     * @return motorcycles representation
+     */
+    @GET
+    @Path("/motorcycleTypes/{typeId}/motorcycles/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    GetMotorcycleResponse getMotorcycleTypeMotorcycle(@PathParam("typeId") UUID typeId ,@PathParam("id") UUID id);
 
     /**
      * @param id      motorcycle's id
