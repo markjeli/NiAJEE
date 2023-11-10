@@ -79,7 +79,7 @@ Content-Type: application/json
 ###
 
 # Delete existing motorcycle type
-DELETE http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0
+DELETE http://localhost:9080/niajee/api/motorcycleTypes/8d48d3fb-ffde-4646-bb58-0e59a2909952
 
 ###
 
@@ -91,7 +91,7 @@ GET http://localhost:9080/niajee/api/motorcycles
 
 # Get single motorcycle
 
-GET http://localhost:9080/niajee/api/motorcycles/d8422238-ce90-4c9b-87ec-cd75f2bb32f3
+GET http://localhost:9080/niajee/api/motorcycles/76658188-838c-484a-ab78-5c1316f02609
 
 ###
 
@@ -103,7 +103,7 @@ GET http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-056
 
 # Create new motorcycle
 
-PUT http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0/motorcycles/76658188-838c-484a-ab78-5c1316f02609
+PUT http://localhost:9080/niajee/api/motorcycleTypes/8d48d3fb-ffde-4646-bb58-0e59a2909952/motorcycles/76658188-838c-484a-ab78-5c1316f02609
 Content-Type: application/json
 
 {
@@ -133,6 +133,6 @@ Content-Type: application/json
 
 # Delete existing motorcycle
 
-DELETE http://localhost:9080/niajee/api/motorcycles/d8422238-ce90-4c9b-87ec-cd75f2bb32f3
+DELETE http://localhost:9080/niajee/api/motorcycles/76658188-838c-484a-ab78-5c1316f02609
 
 ###

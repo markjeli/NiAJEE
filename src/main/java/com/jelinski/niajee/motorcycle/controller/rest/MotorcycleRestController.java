@@ -8,6 +8,7 @@ import com.jelinski.niajee.motorcycle.dto.PatchMotorcycleRequest;
 import com.jelinski.niajee.motorcycle.dto.PutMotorcycleRequest;
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.service.MotorcycleService;
+import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
@@ -118,8 +119,11 @@ public class MotorcycleRestController implements MotorcycleController {
     public void putMotorcycle(UUID typeId, UUID id, PutMotorcycleRequest request) {
         try {
             Motorcycle motorcycle = factory.requestToMotorcycle().apply(id, request);
-            motorcycle.setMotorcycleType(motorcycleTypeService.find(typeId).orElseThrow(NotFoundException::new));
-            motorcycleService.create(motorcycle);
+            MotorcycleType motorcycleType = motorcycleTypeService.find(typeId).orElseThrow(NotFoundException::new);
+            motorcycle.setMotorcycleType(motorcycleType);
+            motorcycleType.getMotorcycles().add(motorcycle);
+            motorcycleTypeService.update(motorcycleType);
+//            motorcycleService.create(motorcycle);
             response.setHeader("Location", uriInfo.getBaseUriBuilder()
                     .path(MotorcycleController.class, "getMotorcycle")
                     .build(id)
