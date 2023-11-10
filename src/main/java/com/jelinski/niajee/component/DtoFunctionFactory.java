@@ -1,24 +1,28 @@
 package com.jelinski.niajee.component;
 
+import com.jelinski.niajee.motorcycle.dto.GetMotorcycleResponse;
+import com.jelinski.niajee.motorcycle.dto.GetMotorcyclesResponse;
 import com.jelinski.niajee.motorcycle.dto.PatchMotorcycleRequest;
 import com.jelinski.niajee.motorcycle.dto.PutMotorcycleRequest;
-import com.jelinski.niajee.motorcycle.dto.function.*;
-import com.jelinski.niajee.motorcycleType.dto.function.MotorcycleTypeToResponseFunction;
+import com.jelinski.niajee.motorcycle.dto.function.MotorcycleToResponseFunction;
+import com.jelinski.niajee.motorcycle.dto.function.MotorcyclesToResponseFunction;
+import com.jelinski.niajee.motorcycle.dto.function.RequestToMotorcycleFunction;
+import com.jelinski.niajee.motorcycle.dto.function.UpdateMotorcycleWithRequestFunction;
+import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycleType.dto.GetMotorcycleTypeResponse;
 import com.jelinski.niajee.motorcycleType.dto.GetMotorcycleTypesResponse;
+import com.jelinski.niajee.motorcycleType.dto.function.MotorcycleTypeToResponseFunction;
 import com.jelinski.niajee.motorcycleType.dto.function.MotorcycleTypesToResponseFunction;
 import com.jelinski.niajee.motorcycleType.dto.function.RequestToMotorcycleTypeFunction;
 import com.jelinski.niajee.motorcycleType.dto.function.UpdateMotorcycleTypeWithRequestFunction;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
-import com.jelinski.niajee.user.dto.function.UserToResponseFunction;
 import com.jelinski.niajee.user.dto.GetUserResponse;
 import com.jelinski.niajee.user.dto.GetUsersResponse;
+import com.jelinski.niajee.user.dto.PutUserRequest;
+import com.jelinski.niajee.user.dto.function.RequestToUserFunction;
+import com.jelinski.niajee.user.dto.function.UserToResponseFunction;
 import com.jelinski.niajee.user.dto.function.UsersToResponseFunction;
-import com.jelinski.niajee.motorcycle.dto.GetMotorcycleResponse;
-import com.jelinski.niajee.motorcycle.dto.GetMotorcyclesResponse;
 import com.jelinski.niajee.user.entity.User;
-import com.jelinski.niajee.motorcycle.entity.Motorcycle;
-
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.function.Function;
@@ -46,6 +50,15 @@ public class DtoFunctionFactory {
      */
     public UsersToResponseFunction usersToResponse() {
         return new UsersToResponseFunction();
+    }
+
+    /**
+     * Returns a function to convert a {@link PutUserRequest} to a {@link User}.
+     *
+     * @return UserToResponseFunction instance
+     */
+    public RequestToUserFunction requestToUser() {
+        return new RequestToUserFunction();
     }
 
     /**

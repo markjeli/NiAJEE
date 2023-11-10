@@ -41,6 +41,22 @@ DELETE http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1e
 
 ###
 
+# Register new user.
+
+PUT http://localhost:9080/niajee/api/users/71034458-f603-4f87-abd6-27b80ee52f1c
+Content-Type: application/json
+
+{
+  "login": "mark",
+  "name": "Mark",
+  "surname": "Zuckerberg",
+  "birthDate": "1984-05-14",
+  "email": "mark.zuckerber@facebook.com",
+  "password": "12345678"
+}
+
+###
+
 # Get all motorcycle types
 
 GET http://localhost:9080/niajee/api/motorcycleTypes
