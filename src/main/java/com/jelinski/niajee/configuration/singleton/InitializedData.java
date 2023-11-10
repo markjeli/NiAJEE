@@ -1,22 +1,27 @@
-package com.jelinski.niajee.configuration.observer;
+package com.jelinski.niajee.configuration.singleton;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 import com.jelinski.niajee.motorcycle.entity.EnumMotorcycle;
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.service.MotorcycleService;
-import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycleType.entity.EnumMotorcycleType;
+import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
+import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
 import com.jelinski.niajee.user.entity.User;
 import com.jelinski.niajee.user.service.UserService;
-import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.context.control.RequestContextController;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -25,60 +30,58 @@ import java.util.UUID;
  * database with default content. When using persistence storage application instance should be initialized only during
  * first run in order to init database with starting data. Good place to create first default admin user.
  */
-@ApplicationScoped
+@Singleton
+@Startup
+@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+@NoArgsConstructor
 public class InitializedData {
 
     /**
      * User service.
      */
-    private final UserService userService;
+    private UserService userService;
 
     /**
      * Motorcycle type service.
      */
-    private final MotorcycleTypeService motorcycleTypeService;
+    private MotorcycleTypeService motorcycleTypeService;
 
     /**
      * Motorcycle service.
      */
-    private final MotorcycleService motorcycleService;
+    private MotorcycleService motorcycleService;
 
     /**
-     * The CDI container provides a built-in instance of {@link RequestContextController} that is dependent scoped for
-     * the purposes of activating and deactivating.
+     * @param userService User service.
      */
-    private final RequestContextController requestContextController;
-
-    /**
-     * @param userService              user service
-     * @param requestContextController CDI request context controller
-     * @param motorcycleTypeService    motorcycle type service
-     */
-    @Inject
-    public InitializedData(
-            UserService userService,
-            MotorcycleTypeService motorcycleTypeService,
-            MotorcycleService motorcycleService,
-            RequestContextController requestContextController
-    ) {
+    @EJB
+    public void setUserService(UserService userService) {
         this.userService = userService;
-        this.motorcycleTypeService = motorcycleTypeService;
-        this.motorcycleService = motorcycleService;
-        this.requestContextController = requestContextController;
     }
 
-    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        init();
+    /**
+     * @param motorcycleTypeService Motorcycle type service.
+     */
+    @EJB
+    public void setMotorcycleTypeService(MotorcycleTypeService motorcycleTypeService) {
+        this.motorcycleTypeService = motorcycleTypeService;
+    }
+
+    /**
+     * @param motorcycleService Motorcycle service.
+     */
+    @EJB
+    public void setMotorcycleService(MotorcycleService motorcycleService) {
+        this.motorcycleService = motorcycleService;
     }
 
     /**
      * Initializes database with some example values. Should be called after creating this object. This object should be
      * created only once.
      */
+    @PostConstruct
     @SneakyThrows
     private void init() {
-        requestContextController.activate();// start request scope in order to inject request scoped repositories
-
         if (userService.find("admin").isEmpty()) {
 
             User admin = User.builder()
@@ -162,7 +165,6 @@ public class InitializedData {
                     .productionDate(LocalDate.of(2017, 1, 1))
                     .price(40000)
                     .weight(200)
-                    //                .image(getResourceAsByteArray("../motorcycle/kawasaki_z900.png"))
                     .motorcycleType(naked)
                     .user(alice)
                     .build();
@@ -176,7 +178,6 @@ public class InitializedData {
                     .productionDate(LocalDate.of(2013, 1, 1))
                     .price(35000)
                     .weight(245)
-                    //                .image(getResourceAsByteArray("../motorcycle/yamaha_mt09.png"))
                     .motorcycleType(naked)
                     .user(bob)
                     .build();
@@ -190,7 +191,6 @@ public class InitializedData {
                     .productionDate(LocalDate.of(2017, 1, 1))
                     .price(60000)
                     .weight(195)
-                    //                .image(getResourceAsByteArray("../motorcycle/honda_cbr1000rr.png"))
                     .motorcycleType(sport)
                     .user(kevin)
                     .build();
@@ -200,7 +200,6 @@ public class InitializedData {
             motorcycleService.create(honda);
         }
 
-        requestContextController.deactivate();
     }
 
 }

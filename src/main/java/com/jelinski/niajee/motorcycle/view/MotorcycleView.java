@@ -4,6 +4,7 @@ import com.jelinski.niajee.component.ModelFunctionFactory;
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.model.MotorcycleModel;
 import com.jelinski.niajee.motorcycle.service.MotorcycleService;
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -27,7 +28,7 @@ public class MotorcycleView implements Serializable {
     /**
      * Service for managing motorcycles.
      */
-    private final MotorcycleService service;
+    private MotorcycleService service;
 
     /**
      * Factory producing functions for conversion between models and entities.
@@ -48,13 +49,16 @@ public class MotorcycleView implements Serializable {
     private MotorcycleModel motorcycle;
 
     /**
-     * @param service service for managing motorcycles
      * @param factory factory producing functions for conversion between models and entities
      */
     @Inject
-    public MotorcycleView(MotorcycleService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public MotorcycleView(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(MotorcycleService service) {
+        this.service = service;
     }
 
     /**

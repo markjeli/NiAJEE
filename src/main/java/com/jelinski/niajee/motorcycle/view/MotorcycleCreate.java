@@ -6,6 +6,7 @@ import com.jelinski.niajee.motorcycle.model.MotorcycleCreateModel;
 import com.jelinski.niajee.motorcycleType.model.MotorcycleTypeModel;
 import com.jelinski.niajee.motorcycle.service.MotorcycleService;
 import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -31,12 +32,12 @@ public class MotorcycleCreate implements Serializable {
     /**
      * Service for managing motorcycles.
      */
-    private final MotorcycleService motorcycleService;
+    private MotorcycleService motorcycleService;
 
     /**
      * Service for managing motorcycleTypes.
      */
-    private final MotorcycleTypeService motorcycleTypeService;
+    private MotorcycleTypeService motorcycleTypeService;
 
     /**
      * Factory producing functions for conversion between models and entities.
@@ -70,18 +71,21 @@ public class MotorcycleCreate implements Serializable {
     private EnumMotorcycle.Brand[] brands;
 
     /**
-     * @param motorcycleService     service for managing motorcycles
-     * @param motorcycleTypeService service for managing motorcycleTypes
      * @param factory               factory producing functions for conversion between models and entities
      */
     @Inject
-    public MotorcycleCreate(
-            MotorcycleService motorcycleService,
-            MotorcycleTypeService motorcycleTypeService,
-            ModelFunctionFactory factory) {
-        this.motorcycleService = motorcycleService;
-        this.motorcycleTypeService = motorcycleTypeService;
+    public MotorcycleCreate(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setMotorcycleService(MotorcycleService motorcycleService) {
+        this.motorcycleService = motorcycleService;
+    }
+
+    @EJB
+    public void setMotorcycleTypeService(MotorcycleTypeService motorcycleTypeService) {
+        this.motorcycleTypeService = motorcycleTypeService;
     }
 
     /**

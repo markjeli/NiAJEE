@@ -7,9 +7,10 @@ import com.jelinski.niajee.motorcycleType.dto.GetMotorcycleTypesResponse;
 import com.jelinski.niajee.motorcycleType.dto.PatchMotorcycleTypeRequest;
 import com.jelinski.niajee.motorcycleType.dto.PutMotorcycleTypeRequest;
 import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.Path;
@@ -34,7 +35,7 @@ public class MotorcycleTypeRestController implements MotorcycleTypeController {
     /**
      * Service for motorcycleType entity.
      */
-    private final MotorcycleTypeService service;
+    private MotorcycleTypeService service;
 
     /**
      * Factory producing functions for conversion between DTO and entities.
@@ -58,19 +59,21 @@ public class MotorcycleTypeRestController implements MotorcycleTypeController {
     }
 
     /**
-     * @param service service for motorcycleType entity
      * @param factory factory producing functions for conversion between DTO and entities
      * @param uriInfo allows to create {@link UriBuilder} based on current request
      */
     @Inject
     public MotorcycleTypeRestController(
-            MotorcycleTypeService service,
             DtoFunctionFactory factory,
             @SuppressWarnings("CdiInjectionPointsInspection") UriInfo uriInfo
     ) {
-        this.service = service;
         this.factory = factory;
         this.uriInfo = uriInfo;
+    }
+
+    @EJB
+    public void setService(MotorcycleTypeService service) {
+        this.service = service;
     }
 
     @Override
@@ -95,7 +98,7 @@ public class MotorcycleTypeRestController implements MotorcycleTypeController {
                     .build(id)
                     .toString());
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (TransactionalException ex) {
+        } catch (EJBException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 throw new BadRequestException(ex);

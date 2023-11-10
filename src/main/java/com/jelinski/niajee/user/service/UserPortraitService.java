@@ -1,7 +1,9 @@
 package com.jelinski.niajee.user.service;
 
 import com.jelinski.niajee.user.entity.User;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
 import jakarta.ws.rs.NotFoundException;
@@ -12,18 +14,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@ApplicationScoped
-@NoArgsConstructor(force = true)
+@Dependent
 public class UserPortraitService {
     /**
      * Path to folder where portraits are stored.
      */
-    private final String fileStorePath;
+    private static final String fileStorePath = "C:\\Users\\ThinkPad\\IdeaProjects\\NiAJEE\\upload";
 
-    @Inject
-    public UserPortraitService(ServletContext servletContext) {
-        this.fileStorePath = servletContext.getInitParameter("portrait_path");
-    }
+//    @Inject
+//    public UserPortraitService(ServletContext servletContext) {
+//        this.fileStorePath = servletContext.getInitParameter("portrait_path");
+//    }
 
     public byte[] getPortrait(User user) throws IOException {
         if (user.getPortraitPath() == null) {

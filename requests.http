@@ -107,7 +107,7 @@ GET http://localhost:9080/niajee/api/motorcycles
 
 # Get single motorcycle
 
-GET http://localhost:9080/niajee/api/motorcycles/76658188-838c-484a-ab78-5c1316f02609
+GET http://localhost:9080/niajee/api/motorcycles/d8422238-ce90-4c9b-87ec-cd75f2bb32f3
 
 ###
 

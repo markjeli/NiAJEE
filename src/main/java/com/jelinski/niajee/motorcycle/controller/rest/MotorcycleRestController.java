@@ -10,9 +10,10 @@ import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.service.MotorcycleService;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.Path;
@@ -37,12 +38,12 @@ public class MotorcycleRestController implements MotorcycleController {
     /**
      * Service layer for all business actions regarding motorcycle entity.
      */
-    private final MotorcycleService motorcycleService;
+    private MotorcycleService motorcycleService;
 
     /**
      * Service layer for all business actions regarding motorcycleType entity.
      */
-    private final MotorcycleTypeService motorcycleTypeService;
+    private MotorcycleTypeService motorcycleTypeService;
 
     /**
      * Factory producing functions for conversion between DTO and entities.
@@ -66,21 +67,26 @@ public class MotorcycleRestController implements MotorcycleController {
     }
 
     /**
-     * @param motorcycleService character service
      * @param factory factory producing functions for conversion between DTO and entities
      * @param uriInfo allows to create {@link UriBuilder} based on current request
      */
     @Inject
     public MotorcycleRestController(
-            MotorcycleService motorcycleService,
-            MotorcycleTypeService motorcycleTypeService,
             DtoFunctionFactory factory,
             @SuppressWarnings("CdiInjectionPointsInspection") UriInfo uriInfo
     ) {
-        this.motorcycleService = motorcycleService;
-        this.motorcycleTypeService = motorcycleTypeService;
         this.factory = factory;
         this.uriInfo = uriInfo;
+    }
+
+    @EJB
+    public void setMotorcycleService(MotorcycleService motorcycleService) {
+        this.motorcycleService = motorcycleService;
+    }
+
+    @EJB
+    public void setMotorcycleTypeService(MotorcycleTypeService motorcycleTypeService) {
+        this.motorcycleTypeService = motorcycleTypeService;
     }
 
     @Override
@@ -129,7 +135,7 @@ public class MotorcycleRestController implements MotorcycleController {
                     .build(id)
                     .toString());
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (TransactionalException ex) {
+        } catch (EJBException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 throw new BadRequestException(ex);

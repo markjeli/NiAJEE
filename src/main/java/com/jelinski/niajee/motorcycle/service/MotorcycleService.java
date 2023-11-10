@@ -5,7 +5,8 @@ import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepository;
 import com.jelinski.niajee.user.repository.api.UserRepository;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,8 @@ import java.util.UUID;
 /**
  * Service layer for all business actions regarding motorcycle entity.
  */
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class MotorcycleService {
 
@@ -82,7 +84,6 @@ public class MotorcycleService {
      *
      * @param motorcycle new motorcycle to be saved
      */
-    @Transactional
     public void create(Motorcycle motorcycle) {
         if (motorcycleRepository.find(motorcycle.getId()).isPresent()) {
             throw new IllegalArgumentException("Motorcycle already exists");
@@ -98,7 +99,6 @@ public class MotorcycleService {
      *
      * @param motorcycle motorcycle to be updated
      */
-    @Transactional
     public void update(Motorcycle motorcycle) {
         motorcycleRepository.update(motorcycle);
     }
@@ -108,7 +108,6 @@ public class MotorcycleService {
      *
      * @param id motorcycle's id
      */
-    @Transactional
     public void delete(UUID id) {
         motorcycleRepository.delete(motorcycleRepository.find(id).orElseThrow());
     }

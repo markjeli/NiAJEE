@@ -2,9 +2,8 @@ package com.jelinski.niajee.motorcycle.repository.persistence;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
 
@@ -18,7 +17,7 @@ import java.util.UUID;
  * Because services are CDI application scoped beans (technically singletons) then repositories must be thread scoped in
  * order to ensure single entity manager for single thread.
  */
-@RequestScoped
+@Dependent
 public class MotorcyclePersistenceRepository implements MotorcycleRepository {
 
     /**

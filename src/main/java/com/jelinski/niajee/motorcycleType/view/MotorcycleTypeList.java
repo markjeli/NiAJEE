@@ -3,6 +3,7 @@ package com.jelinski.niajee.motorcycleType.view;
 import com.jelinski.niajee.component.ModelFunctionFactory;
 import com.jelinski.niajee.motorcycleType.model.MotorcycleTypesModel;
 import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -17,7 +18,7 @@ public class MotorcycleTypeList {
     /**
      * Service for managing motorcycle types.
      */
-    private final MotorcycleTypeService service;
+    private MotorcycleTypeService service;
 
     /**
      * Motorcycles list exposed to the view.
@@ -30,13 +31,16 @@ public class MotorcycleTypeList {
     private final ModelFunctionFactory factory;
 
     /**
-     * @param service motorcycle type service
      * @param factory factory producing functions for conversion between models and entities
      */
     @Inject
-    public MotorcycleTypeList(MotorcycleTypeService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public MotorcycleTypeList(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(MotorcycleTypeService service) {
+        this.service = service;
     }
 
     /**

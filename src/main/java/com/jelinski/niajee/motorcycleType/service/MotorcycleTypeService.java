@@ -1,9 +1,9 @@
 package com.jelinski.niajee.motorcycleType.service;
 
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepository;
 
@@ -14,7 +14,8 @@ import java.util.UUID;
 /**
  * Service layer for all business actions regarding motorcycleType entity.
  */
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class MotorcycleTypeService {
 
@@ -52,7 +53,6 @@ public class MotorcycleTypeService {
      *
      * @param motorcycleType new motorcycleType to be saved
      */
-    @Transactional
     public void create(MotorcycleType motorcycleType) {
         repository.create(motorcycleType);
     }
@@ -62,7 +62,6 @@ public class MotorcycleTypeService {
      *
      * @param motorcycleType motorcycleType to be updated
      */
-    @Transactional
     public void update(MotorcycleType motorcycleType) {
         repository.update(motorcycleType);
     }
@@ -72,7 +71,6 @@ public class MotorcycleTypeService {
      *
      * @param id motorcycleType's id to be deleted
      */
-    @Transactional
     public void delete(UUID id) {
         repository.delete(repository.find(id).orElseThrow());
     }
