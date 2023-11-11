@@ -1,11 +1,14 @@
 package com.jelinski.niajee.motorcycleType.service;
 
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
+import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepository;
+import com.jelinski.niajee.user.entity.UserRoles;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
-import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +40,7 @@ public class MotorcycleTypeService {
      * @param id motorcycleType's id
      * @return container with motorcycleType entity
      */
+    @PermitAll
     public Optional<MotorcycleType> find(UUID id) {
         return repository.find(id);
     }
@@ -44,6 +48,7 @@ public class MotorcycleTypeService {
     /**
      * @return all available motorcycleTypes
      */
+    @PermitAll
     public List<MotorcycleType> findAll() {
         return repository.findAll();
     }
@@ -53,6 +58,7 @@ public class MotorcycleTypeService {
      *
      * @param motorcycleType new motorcycleType to be saved
      */
+    @RolesAllowed(UserRoles.ADMIN)
     public void create(MotorcycleType motorcycleType) {
         repository.create(motorcycleType);
     }
@@ -62,6 +68,7 @@ public class MotorcycleTypeService {
      *
      * @param motorcycleType motorcycleType to be updated
      */
+    @RolesAllowed(UserRoles.ADMIN)
     public void update(MotorcycleType motorcycleType) {
         repository.update(motorcycleType);
     }
@@ -71,8 +78,19 @@ public class MotorcycleTypeService {
      *
      * @param id motorcycleType's id to be deleted
      */
+    @RolesAllowed(UserRoles.ADMIN)
     public void delete(UUID id) {
         repository.delete(repository.find(id).orElseThrow());
     }
+
+//    /**
+//     * @throws EJBAccessException when caller principal has no admin role and is not character's owner
+//     */
+//    private void checkAdminRole() throws EJBAccessException {
+//        if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
+//            return;
+//        }
+//        throw new EJBAccessException("Caller not authorized.");
+//    }
 
 }

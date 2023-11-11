@@ -81,6 +81,14 @@ public class User implements Serializable {
     @ToString.Exclude//It's common to exclude lists from toString
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Motorcycle> motorcycleList;
+    private List<Motorcycle> motorcycles;
+
+    /**
+     * User's security roles.
+     */
+    @CollectionTable(name = "users__roles", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
 }

@@ -1,11 +1,10 @@
 package com.jelinski.niajee.configuration.singleton;
 
+import com.jelinski.niajee.user.entity.UserRoles;
 import jakarta.annotation.PostConstruct;
-import jakarta.ejb.EJB;
-import jakarta.ejb.Singleton;
-import jakarta.ejb.Startup;
-import jakarta.ejb.TransactionAttribute;
-import jakarta.ejb.TransactionAttributeType;
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.annotation.security.RunAs;
+import jakarta.ejb.*;
 import com.jelinski.niajee.motorcycle.entity.EnumMotorcycle;
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.service.MotorcycleService;
@@ -21,8 +20,10 @@ import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -34,6 +35,10 @@ import java.util.UUID;
 @Startup
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 @NoArgsConstructor
+@DependsOn("InitializeAdminService")
+@DeclareRoles({UserRoles.ADMIN, UserRoles.USER})
+@RunAs(UserRoles.ADMIN)
+@Log
 public class InitializedData {
 
     /**
@@ -92,6 +97,7 @@ public class InitializedData {
                     .birthDate(LocalDate.of(1990, 10, 21))
                     .email("admin@simplerpg.example.com")
                     .password("adminadmin")
+                    .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
                     .build();
 
             User kevin = User.builder()
@@ -102,6 +108,7 @@ public class InitializedData {
                     .birthDate(LocalDate.of(2001, 1, 16))
                     .email("kevin@example.com")
                     .password("useruser")
+                    .roles(List.of(UserRoles.USER))
                     .build();
 
             User alice = User.builder()
@@ -112,6 +119,7 @@ public class InitializedData {
                     .birthDate(LocalDate.of(2002, 3, 19))
                     .email("alice@example.com")
                     .password("useruser")
+                    .roles(List.of(UserRoles.USER))
                     .build();
 
             User bob = User.builder()
@@ -122,6 +130,7 @@ public class InitializedData {
                     .birthDate(LocalDate.of(2003, 7, 12))
                     .email("bob@example.com")
                     .password("useruser")
+                    .roles(List.of(UserRoles.USER))
                     .build();
 
             userService.create(admin);

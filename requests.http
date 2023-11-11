@@ -1,25 +1,35 @@
 # Get all users.
 
+// @no-cookie-jar
 GET http://localhost:9080/niajee/api/users
+Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 ###
 
-# Get single character.
+# Get single user.
 
+// @no-cookie-jar
 GET http://localhost:9080/niajee/api/users/ed6cfb2a-cad7-47dd-9b56-9d1e3c7a4197
+Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 ###
 
 # Get single user portrait.
 
+// @no-cookie-jar
 GET http://localhost:9080/niajee/api/users/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6/portrait
+Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 ###
 
 # Create user portrait.
 
+// @no-cookie-jar
 PUT http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1ea3/portrait
 Content-Type: multipart/form-data; boundary=boundary
+Authorization: Basic Ym9iOnVzZXJ1c2Vy #bob:user
+
 
 --boundary
 Content-Disposition: form-data; name="portrait"; filename="bob.png'
@@ -31,20 +41,27 @@ Content-Disposition: form-data; name="portrait"; filename="bob.png'
 
 # Get single user portrait.
 
+// @no-cookie-jar
 GET http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1ea3/portrait
+Authorization: Basic Ym9iOnVzZXJ1c2Vy #bob:user
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 ###
 
 # Delete user's portrait.
 
+// @no-cookie-jar
 DELETE http://localhost:9080/niajee/api/users/c4a04a73-f6e0-4996-a465-3b85f2ad1ea3/portrait
-
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+Authorization: Basic Ym9iOnVzZXJ1c2Vy #bob:user
 ###
 
 # Register new user.
 
+// @no-cookie-jar
 PUT http://localhost:9080/niajee/api/users/71034458-f603-4f87-abd6-27b80ee52f1c
 Content-Type: application/json
+#Authorization: Basic bWFyazoxMjM0NTY3OA== #mark:user
 
 {
   "login": "mark",
@@ -59,20 +76,27 @@ Content-Type: application/json
 
 # Get all motorcycle types
 
+// @no-cookie-jar
 GET http://localhost:9080/niajee/api/motorcycleTypes
+Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 ###
 
 # Get single motorcycle type
 
+// @no-cookie-jar
 GET http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 ###
 
 # Create new motorcycle type
 
+// @no-cookie-jar
 PUT http://localhost:9080/niajee/api/motorcycleTypes/8d48d3fb-ffde-4646-bb58-0e59a2909952
 Content-Type: application/json
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 {
   "typeName": "Scooter",
@@ -84,8 +108,11 @@ Content-Type: application/json
 
 # Update existing motorcycle type
 
+// @no-cookie-jar
 PATCH http://localhost:9080/niajee/api/motorcycleTypes/bbb60000-1a7d-45cb-b6ac-3812c8f8eb3d
 Content-Type: application/json
+Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+#Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 {
   "typeName": "Changed",
@@ -95,35 +122,49 @@ Content-Type: application/json
 ###
 
 # Delete existing motorcycle type
+
+// @no-cookie-jar
 DELETE http://localhost:9080/niajee/api/motorcycleTypes/8d48d3fb-ffde-4646-bb58-0e59a2909952
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+#Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 ###
 
 # Get all motorcycles
 
+// @no-cookie-jar
 GET http://localhost:9080/niajee/api/motorcycles
+Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+#Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 ###
 
 # Get single motorcycle
 
+// @no-cookie-jar
 GET http://localhost:9080/niajee/api/motorcycles/d8422238-ce90-4c9b-87ec-cd75f2bb32f3
+Authorization: Basic YWxpY2U6dXNlcnVzZXI= #alice:user
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 ###
 
 # Get all motorcycle type motorcycles
 
+// @no-cookie-jar
 GET http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0/motorcycles
+Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 ###
 
 # Create new motorcycle
 
-PUT http://localhost:9080/niajee/api/motorcycleTypes/8d48d3fb-ffde-4646-bb58-0e59a2909952/motorcycles/76658188-838c-484a-ab78-5c1316f02609
+// @no-cookie-jar
+PUT http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0/motorcycles/76658188-838c-484a-ab78-5c1316f02609
 Content-Type: application/json
+Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 {
-  "name": "Honda CBR 1000RR",
+  "name": "Honda CBR 1000R",
   "horsepower": 200,
   "color": "RED",
   "brand": "HONDA",
@@ -136,8 +177,11 @@ Content-Type: application/json
 
 # Update existing motorcycle
 
+// @no-cookie-jar
 PATCH http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0/motorcycles/d8422238-ce90-4c9b-87ec-cd75f2bb32f3
 Content-Type: application/json
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+Authorization: Basic YWxpY2U6dXNlcnVzZXI= #alice:user
 
 {
   "name": "Changed",
@@ -149,6 +193,9 @@ Content-Type: application/json
 
 # Delete existing motorcycle
 
+// @no-cookie-jar
 DELETE http://localhost:9080/niajee/api/motorcycles/76658188-838c-484a-ab78-5c1316f02609
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 ###

@@ -34,6 +34,15 @@ public interface MotorcycleController {
     GetMotorcyclesResponse getMotorcycleTypeMotorcycles(@PathParam("id") UUID id);
 
     /**
+     * @param id user's id
+     * @return motorcycles representation
+     */
+    @GET
+    @Path("/users/{id}/motorcycles/")
+    @Produces(MediaType.APPLICATION_JSON)
+    GetMotorcyclesResponse getUserMotorcycles(@PathParam("id") UUID id);
+
+    /**
      * @param id motorcycle's id
      * @return motorcycle representation
      */

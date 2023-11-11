@@ -10,6 +10,8 @@ import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.service.MotorcycleService;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
+import com.jelinski.niajee.user.entity.UserRoles;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
@@ -33,6 +35,7 @@ import java.util.logging.Level;
  */
 @Path("")
 @Log
+@RolesAllowed(UserRoles.USER)//Secure implementation, not the interface
 public class MotorcycleRestController implements MotorcycleController {
 
     /**
@@ -102,6 +105,13 @@ public class MotorcycleRestController implements MotorcycleController {
     }
 
     @Override
+    public GetMotorcyclesResponse getUserMotorcycles(UUID id) {
+        return motorcycleService.findAllByUser(id)
+                .map(factory.motorcyclesToResponse())
+                .orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public GetMotorcycleResponse getMotorcycle(UUID id) {
         return motorcycleService.find(id)
                 .map(factory.motorcycleToResponse())
@@ -127,9 +137,7 @@ public class MotorcycleRestController implements MotorcycleController {
             Motorcycle motorcycle = factory.requestToMotorcycle().apply(id, request);
             MotorcycleType motorcycleType = motorcycleTypeService.find(typeId).orElseThrow(NotFoundException::new);
             motorcycle.setMotorcycleType(motorcycleType);
-            motorcycleType.getMotorcycles().add(motorcycle);
-            motorcycleTypeService.update(motorcycleType);
-//            motorcycleService.create(motorcycle);
+            motorcycleService.createForCallerPrincipal(motorcycle);
             response.setHeader("Location", uriInfo.getBaseUriBuilder()
                     .path(MotorcycleController.class, "getMotorcycle")
                     .build(id)

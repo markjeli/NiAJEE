@@ -1,13 +1,8 @@
 package com.jelinski.niajee.user.service;
 
 import com.jelinski.niajee.user.entity.User;
-import jakarta.ejb.LocalBean;
-import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.Dependent;
-import jakarta.inject.Inject;
-import jakarta.servlet.ServletContext;
 import jakarta.ws.rs.NotFoundException;
-import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.nio.file.Files;
