@@ -40,7 +40,7 @@ public class MotorcycleTypeService {
      * @param id motorcycleType's id
      * @return container with motorcycleType entity
      */
-    @PermitAll
+    @RolesAllowed(UserRoles.USER)
     public Optional<MotorcycleType> find(UUID id) {
         return repository.find(id);
     }
@@ -48,7 +48,7 @@ public class MotorcycleTypeService {
     /**
      * @return all available motorcycleTypes
      */
-    @PermitAll
+    @RolesAllowed(UserRoles.USER)
     public List<MotorcycleType> findAll() {
         return repository.findAll();
     }

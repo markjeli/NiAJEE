@@ -78,7 +78,7 @@ Content-Type: application/json
 
 // @no-cookie-jar
 GET http://localhost:9080/niajee/api/motorcycleTypes
-Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 ###
 
@@ -86,7 +86,7 @@ Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 // @no-cookie-jar
 GET http://localhost:9080/niajee/api/motorcycleTypes/47fc4252-9c4e-4b61-8042-05648be14bc0
-#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 ###
 
@@ -125,7 +125,7 @@ Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 
 // @no-cookie-jar
 DELETE http://localhost:9080/niajee/api/motorcycleTypes/8d48d3fb-ffde-4646-bb58-0e59a2909952
-#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
 #Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 ###
@@ -134,8 +134,8 @@ DELETE http://localhost:9080/niajee/api/motorcycleTypes/8d48d3fb-ffde-4646-bb58-
 
 // @no-cookie-jar
 GET http://localhost:9080/niajee/api/motorcycles
-Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
-#Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
+#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 ###
 
@@ -195,7 +195,8 @@ Authorization: Basic YWxpY2U6dXNlcnVzZXI= #alice:user
 
 // @no-cookie-jar
 DELETE http://localhost:9080/niajee/api/motorcycles/76658188-838c-484a-ab78-5c1316f02609
-#Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
-Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
+Authorization: Basic a2V2aW46dXNlcnVzZXI= #kevin:user
+#Authorization: Basic YWxpY2U6dXNlcnVzZXI= #alice:user
+#Authorization: Basic YWRtaW46YWRtaW5hZG1pbg== #admin:admin
 
 ###

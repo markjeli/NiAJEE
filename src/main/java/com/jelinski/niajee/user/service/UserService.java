@@ -103,7 +103,9 @@ public class UserService {
     @PermitAll
     public void create(User user) {
         user.setPassword(passwordHash.generate(user.getPassword().toCharArray()));
-        user.setRoles(List.of(UserRoles.USER));
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            user.setRoles(List.of(UserRoles.USER));
+        }
         repository.create(user);
     }
 
