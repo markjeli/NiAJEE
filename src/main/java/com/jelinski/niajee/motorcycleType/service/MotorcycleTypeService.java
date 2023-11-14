@@ -5,9 +5,11 @@ import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepositor
 import com.jelinski.niajee.user.entity.UserRoles;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -82,15 +84,5 @@ public class MotorcycleTypeService {
     public void delete(UUID id) {
         repository.delete(repository.find(id).orElseThrow());
     }
-
-//    /**
-//     * @throws EJBAccessException when caller principal has no admin role and is not character's owner
-//     */
-//    private void checkAdminRole() throws EJBAccessException {
-//        if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
-//            return;
-//        }
-//        throw new EJBAccessException("Caller not authorized.");
-//    }
 
 }
