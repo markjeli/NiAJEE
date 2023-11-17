@@ -1,13 +1,18 @@
 package com.jelinski.niajee.component;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
-import com.jelinski.niajee.motorcycle.model.function.*;
 import com.jelinski.niajee.motorcycle.model.MotorcycleEditModel;
-import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycle.model.MotorcyclesModel;
+import com.jelinski.niajee.motorcycle.model.function.*;
+import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
+import com.jelinski.niajee.motorcycleType.model.MotorcycleTypesModel;
 import com.jelinski.niajee.motorcycleType.model.function.MotorcycleTypeToModelFunction;
 import com.jelinski.niajee.motorcycleType.model.function.MotorcycleTypesToModelFunction;
-import com.jelinski.niajee.motorcycleType.model.MotorcycleTypesModel;
+import com.jelinski.niajee.user.entity.User;
+import com.jelinski.niajee.user.model.UserModel;
+import com.jelinski.niajee.user.model.UsersModel;
+import com.jelinski.niajee.user.model.function.UserToModelFunction;
+import com.jelinski.niajee.user.model.function.UsersToModelFunction;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.function.Function;
@@ -61,7 +66,7 @@ public class ModelFunctionFactory {
      * @return new instance
      */
     public MotorcycleToEditModelFunction motorcycleToEditModel() {
-        return new MotorcycleToEditModelFunction();
+        return new MotorcycleToEditModelFunction(userToModel());
     }
 
     /**
@@ -80,5 +85,23 @@ public class ModelFunctionFactory {
      */
     public ModelToMotorcycleFunction modelToMotorcycle() {
         return new ModelToMotorcycleFunction();
+    }
+
+    /**
+     * Returns a function to convert a single {@link User} to {@link UserModel}.
+     *
+     * @return UserToModelFunction instance
+     */
+    public UserToModelFunction userToModel() {
+        return new UserToModelFunction();
+    }
+
+    /**
+     * Returns a function to convert a list {@link Character} to {@link UsersModel}.
+     *
+     * @return UserToModelFunction instance
+     */
+    public UsersToModelFunction usersToModel() {
+        return new UsersToModelFunction();
     }
 }

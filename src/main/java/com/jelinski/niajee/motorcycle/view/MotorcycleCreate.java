@@ -110,7 +110,7 @@ public class MotorcycleCreate implements Serializable {
      * @return motorcycles list navigation case
      */
     public String saveAction() {
-        motorcycleService.create(factory.modelToMotorcycle().apply(motorcycle));
+        motorcycleService.createForCallerPrincipal(factory.modelToMotorcycle().apply(motorcycle));
         return "/motorcycle/motorcycle_list.xhtml?faces-redirect=true";
     }
 

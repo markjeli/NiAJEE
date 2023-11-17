@@ -1,6 +1,7 @@
 package com.jelinski.niajee.motorcycle.model;
 
 import com.jelinski.niajee.motorcycle.entity.EnumMotorcycle;
+import com.jelinski.niajee.user.model.UserModel;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,5 +38,10 @@ public class MotorcycleEditModel {
      * Motorcycle's color.
      */
     private EnumMotorcycle.Color color;
+
+    /**
+     * Motorcycle's owner.
+     */
+    private UserModel user;
 
 }

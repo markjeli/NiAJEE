@@ -2,6 +2,7 @@ package com.jelinski.niajee.motorcycle.model.function;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.model.MotorcycleEditModel;
+import com.jelinski.niajee.user.entity.User;
 import lombok.SneakyThrows;
 
 import java.io.Serializable;
@@ -26,6 +27,9 @@ public class UpdateMotorcycleWithModelFunction implements BiFunction<Motorcycle,
                 .productionDate(entity.getProductionDate())
                 .weight(entity.getWeight())
                 .motorcycleType(entity.getMotorcycleType())
+                .user(User.builder()
+                        .id(request.getUser().getId())
+                        .build())
                 .build();
     }
 

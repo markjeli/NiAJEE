@@ -18,14 +18,14 @@
                     <h:outputText value="#{motorcycleType.typeName}"/>
                 </h:column>
 
-                <h:column>
+                <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
                     <f:facet name="header">View</f:facet>
                     <h:link outcome="/motorcycle/motorcycle_list.xhtml" value="View">
                         <f:param name="motorcycle-type-id" value="#{motorcycleType.id}"/>
                     </h:link>
                 </h:column>
 
-                <h:column>
+                <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
                     <f:facet name="header">Delete</f:facet>
                     <h:form>
                         <h:commandButton styleClass="btn" value="Delete"

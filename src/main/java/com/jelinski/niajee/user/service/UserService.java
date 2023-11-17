@@ -110,6 +110,16 @@ public class UserService {
     }
 
     /**
+     * Deletes user.
+     *
+     * @param id id of user to be deleted
+     */
+    @RolesAllowed(UserRoles.ADMIN)
+    public void delete(UUID id) {
+        repository.delete(repository.find(id).orElseThrow());
+    }
+
+    /**
      * @param login    user's login
      * @param password user's password
      * @return true if provided login and password are correct
