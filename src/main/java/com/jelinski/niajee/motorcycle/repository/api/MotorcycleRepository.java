@@ -24,6 +24,15 @@ public interface MotorcycleRepository extends Repository<Motorcycle, UUID> {
     Optional<Motorcycle> findByIdAndUser(UUID id, User user);
 
     /**
+     * Seeks for single user's motorcycle of given type.
+     *
+     * @param motorcycleType motorcycle's type
+     * @param user           character's owner
+     * @return container (can be empty) with motorcycle
+     */
+    List<Motorcycle> findAllByMotorcycleTypeAndUser(MotorcycleType motorcycleType, User user);
+
+    /**
      * Seeks for all user's motorcycle.
      *
      * @param user characters' owner

@@ -1,13 +1,13 @@
 package com.jelinski.niajee.motorcycle.repository.persistence;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
+import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.user.entity.User;
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +49,14 @@ public class MotorcyclePersistenceRepository implements MotorcycleRepository {
         } catch (NoResultException ex) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<Motorcycle> findAllByMotorcycleTypeAndUser(MotorcycleType motorcycleType, User user) {
+        return em.createQuery("select m from Motorcycle m where m.motorcycleType = :motorcycleType and m.user = :user", Motorcycle.class)
+                .setParameter("user", user)
+                .setParameter("motorcycleType", motorcycleType)
+                .getResultList();
     }
 
     @Override

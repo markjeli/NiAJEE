@@ -11,6 +11,7 @@
    </f:metadata>
 
    <ui:define name="content">
+      <f:loadBundle var="msg" basename="com.jelinski.niajee.motorcycle.view.i18n.messages"/>
       <article>
          <header><h2><h:outputText value="#{motorcycleView.motorcycle.name}"/></h2></header>
          <div class="container">
@@ -19,7 +20,7 @@
                   
                   <div class="row mb-2">
                      <div class="col-6">
-                        Name
+                        #{msg['data.name']}
                      </div>
                      <div class="col-6">
                         <h:outputText value="#{motorcycleView.motorcycle.name}"/>
@@ -28,7 +29,7 @@
 
                   <div class="row mb-2">
                      <div class="col-6">
-                        Type
+                        #{msg['data.type']}
                      </div>
                      <div class="col-6">
                         <h:outputText value="#{motorcycleView.motorcycle.type}"/>
@@ -37,7 +38,7 @@
 
                   <div class="row mb-2">
                      <div class="col-6">
-                        Price
+                        #{msg['data.price']}
                      </div>
                      <div class="col-6">
                         <h:outputText value="#{motorcycleView.motorcycle.price}"/>
@@ -46,7 +47,7 @@
 
                   <div class="row mb-2">
                      <div class="col-6">
-                        Production Date
+                        #{msg['data.productionDate']}
                      </div>
                      <div class="col-6">
                         <h:outputText value="#{motorcycleView.motorcycle.productionDate}"/>
@@ -55,7 +56,7 @@
 
                   <div class="row mb-2">
                      <div class="col-6">
-                        Horsepower
+                        #{msg['data.horsepower']}
                      </div>
                      <div class="col-6">
                         <h:outputText value="#{motorcycleView.motorcycle.horsepower}"/>
@@ -64,7 +65,7 @@
 
                   <div class="row mb-2">
                      <div class="col-6">
-                        Color
+                        #{msg['data.color']}
                      </div>
                      <div class="col-6">
                         <h:outputText value="#{motorcycleView.motorcycle.color}"/>
@@ -73,7 +74,7 @@
 
                   <div class="row mb-2">
                      <div class="col-6">
-                        Brand
+                        #{msg['data.brand']}
                      </div>
                      <div class="col-6">
                         <h:outputText value="#{motorcycleView.motorcycle.brand}"/>
@@ -82,7 +83,7 @@
 
                   <div class="row mb-2">
                      <div class="col-6">
-                        Weight
+                        #{msg['data.weight']}
                      </div>
                      <div class="col-6">
                         <h:outputText value="#{motorcycleView.motorcycle.weight}"/>

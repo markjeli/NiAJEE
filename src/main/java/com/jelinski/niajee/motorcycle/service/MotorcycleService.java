@@ -108,9 +108,14 @@ public class MotorcycleService {
     /**
      * @return all available motorcycles by motorcycle type
      */
-    @RolesAllowed(UserRoles.ADMIN)
+    @RolesAllowed(UserRoles.USER)
     public List<Motorcycle> findAll(MotorcycleType motorcycleType) {
-        return motorcycleRepository.findAllByMotorcycleType(motorcycleType);
+        if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
+            return motorcycleRepository.findAllByMotorcycleType(motorcycleType);
+        }
+        User user = userRepository.findByLogin(securityContext.getCallerPrincipal().getName())
+                .orElseThrow(IllegalStateException::new);
+        return motorcycleRepository.findAllByMotorcycleTypeAndUser(motorcycleType, user);
     }
 
     @RolesAllowed(UserRoles.ADMIN)

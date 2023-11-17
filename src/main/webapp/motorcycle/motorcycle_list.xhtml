@@ -10,51 +10,52 @@
     </f:metadata>
 
     <ui:define name="content">
+        <f:loadBundle var="msg" basename="com.jelinski.niajee.motorcycle.view.i18n.messages"/>
         <h:outputStylesheet library="motorcycle" name="css/motorcycle_list.css"/><!-- Automatically relocated to head. -->
 
         <article class="text--justified">
             <header>
-                <h2>Motorcycles</h2>
+                <h2>#{msg['header.list']}</h2>
                 <div><h:outputText value="#{motorcycleList.motorcycleTypeDescription}"/></div>
             </header>
 
             <h:dataTable value="#{motorcycleList.motorcycles.motorcycles}" var="motorcycle"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
                 <h:column>
-                    <f:facet name="header">Name</f:facet>
+                    <f:facet name="header">#{msg['data.name']}</f:facet>
                     <h:outputText value="#{motorcycle.name}"/>
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">Price</f:facet>
+                    <f:facet name="header">#{msg['data.price']}</f:facet>
                     <h:outputText value="#{motorcycle.price}"/>
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">View</f:facet>
-                    <h:link outcome="/motorcycle/motorcycle_view.xhtml" value="View">
+                    <f:facet name="header">#{msg['data.view']}</f:facet>
+                    <h:link outcome="/motorcycle/motorcycle_view.xhtml" value="#{msg['data.view']}">
                         <f:param name="id" value="#{motorcycle.id}"/>
                     </h:link>
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">Edit</f:facet>
-                    <h:link outcome="/motorcycle/motorcycle_edit.xhtml" value="Edit">
+                    <f:facet name="header">#{msg['data.edit']}</f:facet>
+                    <h:link outcome="/motorcycle/motorcycle_edit.xhtml" value="#{msg['data.edit']}">
                         <f:param name="id" value="#{motorcycle.id}"/>
                     </h:link>
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">Delete</f:facet>
+                    <f:facet name="header">#{msg['data.delete']}</f:facet>
                     <h:form>
-                        <h:commandButton styleClass="btn" value="Delete"
+                        <h:commandButton styleClass="btn" value="#{msg['data.delete']}"
                                          action="#{motorcycleList.deleteAction(motorcycle)}"/>
                     </h:form>
                 </h:column>
 
                 <f:facet name="footer">
                     <h:button styleClass="btn" outcome="/motorcycle/motorcycle_create.xhtml"
-                              value="Create new motorcycle"/>
+                              value="#{msg['form.createNewMotorcycle']}"/>
                 </f:facet>
             </h:dataTable>
         </article>

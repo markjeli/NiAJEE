@@ -10,15 +10,16 @@
     </f:metadata>
 
     <ui:define name="content">
+        <f:loadBundle var="msg" basename="com.jelinski.niajee.motorcycle.view.i18n.messages"/>
         <article>
-            <header><h2>Create motorcycle</h2></header>
+            <header><h2>#{msg['header.create']}</h2></header>
             <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="name" value="#{motorcycleCreate.motorcycle.name}" styleClass="form-control"/>
-                            <h:outputLabel for="name" value="Name:" styleClass="form-label"/>
+                            <h:outputLabel for="name" value="#{msg['data.name']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -27,7 +28,7 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="horsepower" value="#{motorcycleCreate.motorcycle.horsepower}" styleClass="form-control"/>
-                            <h:outputLabel for="horsepower" value="Horsepower:" styleClass="form-label"/>
+                            <h:outputLabel for="horsepower" value="#{msg['data.horsepower']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -36,7 +37,7 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="price" value="#{motorcycleCreate.motorcycle.price}" styleClass="form-control"/>
-                            <h:outputLabel for="price" value="Price:" styleClass="form-label"/>
+                            <h:outputLabel for="price" value="#{msg['data.price']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -45,7 +46,7 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="weight" value="#{motorcycleCreate.motorcycle.weight}" styleClass="form-control"/>
-                            <h:outputLabel for="weight" value="Weight:" styleClass="form-label"/>
+                            <h:outputLabel for="weight" value="#{msg['data.weight']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -56,7 +57,7 @@
                             <h:inputText id="productionDate" value="#{motorcycleCreate.motorcycle.productionDate}" styleClass="form-control">
                                 <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
                             </h:inputText>
-                            <h:outputLabel for="productionDate" value="Production Date:" styleClass="form-label"/>
+                            <h:outputLabel for="productionDate" value="#{msg['data.productionDate']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -64,7 +65,7 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            Color:
+                            #{msg['data.color']}:
                             <h:selectOneMenu value="#{motorcycleCreate.motorcycle.color}">
                                 <f:selectItems value="#{motorcycleCreate.colors}" />
                             </h:selectOneMenu>
@@ -75,7 +76,7 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            Brand:
+                            #{msg['data.brand']}:
                             <h:selectOneMenu value="#{motorcycleCreate.motorcycle.brand}">
                                 <f:selectItems value="#{motorcycleCreate.brands}" />
                             </h:selectOneMenu>
@@ -86,7 +87,7 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <fieldset>
-                            <legend class="form-label fs-6">Motorcycle Type:</legend>
+                            <legend class="form-label fs-6">#{msg['data.motorcycleType']}:</legend>
                             <!-- Instead of ui:repeat the h:selectOneRadio with f:selectItems can be used but then
                             Faces renders table or list and custom styling with CSS libraties can be troublesome. -->
 <!--                            <ui:repeat value="#{motorcycleCreate.motorcycleTypes}" var="motorcycleType">-->
@@ -108,10 +109,10 @@
 
                 <div class="row">
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-primary" value="Create" action="#{motorcycleCreate.saveAction()}"/>
+                        <h:commandButton styleClass="btn btn-primary" value="#{msg['form.create']}" action="#{motorcycleCreate.saveAction()}"/>
                     </div>
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-secondary" value="Cancel" action="#{motorcycleCreate.cancelAction()}"/>
+                        <h:commandButton styleClass="btn btn-secondary" value="#{msg['form.cancel']}" action="#{motorcycleCreate.cancelAction()}"/>
                     </div>
                 </div>
             </h:form>
