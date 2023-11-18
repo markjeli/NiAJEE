@@ -72,7 +72,6 @@ public class UserService {
      */
     @RolesAllowed(UserRoles.USER)
     public Optional<User> find(UUID id) {
-        checkAdminRoleOrOwner(repository.find(id));
         return repository.find(id);
     }
 
@@ -90,7 +89,7 @@ public class UserService {
     /**
      * @return all available users
      */
-    @RolesAllowed(UserRoles.ADMIN)
+    @RolesAllowed(UserRoles.USER)
     public List<User> findAll() {
         return repository.findAll();
     }

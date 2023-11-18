@@ -62,6 +62,12 @@
                                         outcome="/user/user_list.xhtml">#{messages['nav.users']}</h:link>
                             </li>
                         </h:panelGroup>
+                        <h:panelGroup rendered="#{facesContext.externalContext.userPrincipal != null}">
+                            <li class="nav-item">
+                                <h:link styleClass="nav-link"
+                                        outcome="/chat/chat.xhtml">#{messages['nav.chat']}</h:link>
+                            </li>
+                        </h:panelGroup>
                     </ul>
                 </div>
             </nav>

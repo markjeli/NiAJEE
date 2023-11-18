@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+    <f:metadata>
+        <f:viewAction action="#{chat.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <!-- By defailt channel is application scoped.-->
+        <f:websocket channel="broadcastChannel" scope="application" onmessage="receive"/>
+        <!-- By defailt user channel is session scoped.-->
+        <f:websocket rendered="#{facesContext.externalContext.userPrincipal != null}" channel="userChannel"
+                     user="#{facesContext.externalContext.userPrincipal.name}" onmessage="receive"/>
+
+        <f:loadBundle var="msg" basename="com.jelinski.niajee.chat.view.i18n.messages"/>
+
+        <article class="text--justified">
+            <header>
+                <h2>#{msg['header']}</h2>
+            </header>
+
+            <h:form styleClass="container">
+                <div class="form-outline">
+                    <h:outputText value="#{msg.message}: "/>
+                    <h:inputText value="#{chat.message}"/>
+                </div>
+                <div class="form-outline">
+                    #{msg.users}:
+                    <h:selectOneMenu value="#{chat.userToSend}">
+                        <f:selectItems value="#{chat.users}" var="user" itemValue="#{user}" itemLabel="#{user.login}"/>
+                    </h:selectOneMenu>
+                </div>
+                <h:commandButton value="#{msg['form.send']}" action="#{chat.sendMessage}">
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandButton>
+            </h:form>
+            <br/>
+            <aside>
+                <div class="form-outline">
+                    <textarea class="form-control" rows="4" id="messageContainer" readonly="readonly"/>
+                    <label for="messageContainer" class="form-label">#{msg.messages}</label>
+                </div>
+            </aside>
+
+        </article>
+    </ui:define>
+
+</ui:composition>
