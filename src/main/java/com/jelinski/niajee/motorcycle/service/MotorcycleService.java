@@ -1,6 +1,7 @@
 package com.jelinski.niajee.motorcycle.service;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
+import com.jelinski.niajee.motorcycle.interceptor.binding.LogMethodCall;
 import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepository;
@@ -14,6 +15,7 @@ import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +27,7 @@ import java.util.UUID;
 @LocalBean
 @Stateless
 @NoArgsConstructor(force = true)
+@Log
 public class MotorcycleService {
 
     /**
@@ -157,6 +160,7 @@ public class MotorcycleService {
      * @param motorcycle new motorcycle
      */
     @RolesAllowed(UserRoles.USER)
+    @LogMethodCall
     public void createForCallerPrincipal(Motorcycle motorcycle) {
         User user = userRepository.findByLogin(securityContext.getCallerPrincipal().getName())
                 .orElseThrow(IllegalStateException::new);
@@ -171,6 +175,7 @@ public class MotorcycleService {
      * @param motorcycle motorcycle to be updated
      */
     @RolesAllowed(UserRoles.USER)
+    @LogMethodCall
     public void update(Motorcycle motorcycle) {
         checkAdminRoleOrOwner(motorcycleRepository.find(motorcycle.getId()));
         motorcycleRepository.update(motorcycle);
@@ -182,6 +187,7 @@ public class MotorcycleService {
      * @param id motorcycle's id
      */
     @RolesAllowed(UserRoles.USER)
+    @LogMethodCall
     public void delete(UUID id) {
         checkAdminRoleOrOwner(motorcycleRepository.find(id));
         motorcycleRepository.delete(motorcycleRepository.find(id).orElseThrow());
