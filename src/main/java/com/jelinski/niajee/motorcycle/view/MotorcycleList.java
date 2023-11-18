@@ -6,21 +6,22 @@ import com.jelinski.niajee.motorcycle.service.MotorcycleService;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.motorcycleType.service.MotorcycleTypeService;
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
  * View bean for rendering list of motorcycles.
  */
-@RequestScoped
+@ViewScoped
 @Named
-public class MotorcycleList {
+public class MotorcycleList implements Serializable {
 
     /**
      * Service for managing motorcycles.
@@ -111,15 +112,9 @@ public class MotorcycleList {
      * Action for clicking delete action.
      *
      * @param motorcycle motorcycle to be removed
-     * @return navigation case to list_motorcycles
      */
-    public String deleteAction(MotorcyclesModel.Motorcycle motorcycle) {
-        System.out.println(motorcycleTypeId);
+    public void deleteAction(MotorcyclesModel.Motorcycle motorcycle) {
         motorcycleService.delete(motorcycle.getId());
-        if (motorcycleTypeId == null) {
-            return "motorcycle_list?faces-redirect=true";
-        } else {
-            return "motorcycle_list?faces-redirect=true&motorcycle-type-id=" + motorcycleTypeId;
-        }
+        motorcycles = null;
     }
 }

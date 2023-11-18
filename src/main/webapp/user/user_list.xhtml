@@ -10,7 +10,7 @@
         <article class="text--justified">
             <header><h2>#{msg.header}</h2></header>
 
-            <h:dataTable value="#{userList.users.users}" var="user"
+            <h:dataTable id="userTable" value="#{userList.users.users}" var="user"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
                 <h:column>
                     <f:facet name="header">#{msg['data.login']}</f:facet>
@@ -21,7 +21,9 @@
                     <f:facet name="header">#{msg['data.delete']}</f:facet>
                     <h:form>
                         <h:commandButton styleClass="btn" value="#{msg['data.delete']}"
-                                         action="#{userList.deleteAction(user)}"/>
+                                         action="#{userList.deleteAction(user)}">
+                            <f:ajax execute="@this" render=":userTable"/>
+                        </h:commandButton>
                     </h:form>
                 </h:column>
             </h:dataTable>

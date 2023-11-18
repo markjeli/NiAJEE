@@ -19,7 +19,7 @@
                 <div><h:outputText value="#{motorcycleList.motorcycleTypeDescription}"/></div>
             </header>
 
-            <h:dataTable value="#{motorcycleList.motorcycles.motorcycles}" var="motorcycle"
+            <h:dataTable id="motorcycleTable" value="#{motorcycleList.motorcycles.motorcycles}" var="motorcycle"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
                 <h:column>
                     <f:facet name="header">#{msg['data.name']}</f:facet>
@@ -49,7 +49,9 @@
                     <f:facet name="header">#{msg['data.delete']}</f:facet>
                     <h:form>
                         <h:commandButton styleClass="btn" value="#{msg['data.delete']}"
-                                         action="#{motorcycleList.deleteAction(motorcycle)}"/>
+                                         action="#{motorcycleList.deleteAction(motorcycle)}">
+                            <f:ajax execute="@this" render=":motorcycleTable"/>
+                        </h:commandButton>
                     </h:form>
                 </h:column>
 

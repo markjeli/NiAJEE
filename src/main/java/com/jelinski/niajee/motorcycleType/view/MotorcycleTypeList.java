@@ -60,10 +60,9 @@ public class MotorcycleTypeList {
      * Action for clicking delete action.
      *
      * @param motorcycleType motorcycle type to be removed
-     * @return navigation case to list_motorcycle_types
      */
-    public String deleteAction(MotorcycleTypesModel.MotorcycleType motorcycleType) {
+    public void deleteAction(MotorcycleTypesModel.MotorcycleType motorcycleType) {
         service.delete(motorcycleType.getId());
-        return "motorcycleType_list?faces-redirect=true";
+        motorcycleTypes = null;
     }
 }

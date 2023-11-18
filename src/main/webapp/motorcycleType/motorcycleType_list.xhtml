@@ -11,7 +11,7 @@
         <article class="text--justified">
             <header><h2>#{msg.header}</h2></header>
 
-            <h:dataTable value="#{motorcycleTypeList.motorcycleTypes.motorcycleTypes}" var="motorcycleType"
+            <h:dataTable id="motorcycleTypeTable" value="#{motorcycleTypeList.motorcycleTypes.motorcycleTypes}" var="motorcycleType"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
 
                 <h:column>
@@ -30,7 +30,9 @@
                     <f:facet name="header">#{msg['data.delete']}</f:facet>
                     <h:form>
                         <h:commandButton styleClass="btn" value="#{msg['data.delete']}"
-                                         action="#{motorcycleTypeList.deleteAction(motorcycleType)}"/>
+                                         action="#{motorcycleTypeList.deleteAction(motorcycleType)}">
+                            <f:ajax execute="@this" render=":motorcycleTypeTable"/>
+                        </h:commandButton>
                     </h:form>
                 </h:column>
 
