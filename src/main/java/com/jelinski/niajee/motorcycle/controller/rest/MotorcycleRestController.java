@@ -15,6 +15,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
@@ -155,12 +156,18 @@ public class MotorcycleRestController implements MotorcycleController {
     @Override
     public void patchMotorcycle(UUID typeId, UUID id, PatchMotorcycleRequest request) {
         motorcycleTypeService.find(typeId).orElseThrow(NotFoundException::new);
-        motorcycleService.find(id).ifPresentOrElse(
-                motorcycle -> motorcycleService.update(factory.updateMotorcycle().apply(motorcycle, request)),
-                () -> {
-                    throw new NotFoundException();
-                }
-        );
+        try {
+            motorcycleService.find(id).ifPresentOrElse(
+                    motorcycle -> motorcycleService.update(factory.updateMotorcycle().apply(motorcycle, request)),
+                    () -> {
+                        throw new NotFoundException();
+                    }
+            );
+        } catch (EJBException ex) {
+            if (ex.getCause() instanceof OptimisticLockException) {
+                throw new BadRequestException(ex.getCause());
+            }
+        }
     }
 
     @Override

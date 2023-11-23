@@ -19,6 +19,9 @@ public class MotorcyclesToModelFunction implements Function<List<Motorcycle>, Mo
                                 .id(motorcycle.getId())
                                 .name(motorcycle.getName())
                                 .price(motorcycle.getPrice())
+                                .version(motorcycle.getVersion())
+                                .creationDateTime(motorcycle.getCreationDateTime())
+                                .lastUpdateDateTime(motorcycle.getLastUpdateDateTime())
                                 .build())
                         .toList())
                 .build();

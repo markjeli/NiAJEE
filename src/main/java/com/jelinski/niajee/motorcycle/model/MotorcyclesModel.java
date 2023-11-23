@@ -11,6 +11,7 @@ import lombok.Singular;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,6 +53,21 @@ public class MotorcyclesModel implements Serializable {
          * Price of the motorcycle.
          */
         private int price;
+
+        /**
+         * motorcycle's version.
+         */
+        private Long version;
+
+        /**
+         * motorcycle's creation date.
+         */
+        private LocalDateTime creationDateTime;
+
+        /**
+         * motorcycle's last update date.
+         */
+        private LocalDateTime lastUpdateDateTime;
 
     }
 

@@ -21,6 +21,7 @@ public class MotorcycleToResponseFunction implements Function<Motorcycle, GetMot
                 .productionDate(entity.getProductionDate())
                 .price(entity.getPrice())
                 .weight(entity.getWeight())
+                .version(entity.getVersion())
                 .motorcycleType(GetMotorcycleResponse.MotorcycleType.builder()
                         .id(entity.getMotorcycleType().getId())
                         .typeName(entity.getMotorcycleType().getTypeName())

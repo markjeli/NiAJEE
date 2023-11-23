@@ -33,4 +33,9 @@ public class PatchMotorcycleRequest {
      */
     private int price;
 
+    /**
+     * Motorcycle's version.
+     */
+    private Long version;
+
 }

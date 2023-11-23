@@ -91,4 +91,9 @@ public class GetMotorcycleResponse {
      * Motorcycle's type.
      */
     private MotorcycleType motorcycleType;
+
+    /**
+     * Motorcycle's version.
+     */
+    private Long version;
 }

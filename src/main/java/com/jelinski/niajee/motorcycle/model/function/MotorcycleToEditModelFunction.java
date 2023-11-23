@@ -24,6 +24,7 @@ public class MotorcycleToEditModelFunction implements Function<Motorcycle, Motor
                 .color(motorcycle.getColor())
                 .price(motorcycle.getPrice())
                 .user(userToModelFunction.apply(motorcycle.getUser()))
+                .version(motorcycle.getVersion())
                 .build();
     }
 }

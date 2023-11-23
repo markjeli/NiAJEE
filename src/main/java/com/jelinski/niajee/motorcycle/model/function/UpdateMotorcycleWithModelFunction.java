@@ -16,20 +16,23 @@ public class UpdateMotorcycleWithModelFunction implements BiFunction<Motorcycle,
 
     @Override
     @SneakyThrows
-    public Motorcycle apply(Motorcycle entity, MotorcycleEditModel request) {
+    public Motorcycle apply(Motorcycle entity, MotorcycleEditModel model) {
         return Motorcycle.builder()
                 .id(entity.getId())
-                .name(request.getName())
-                .color(request.getColor())
-                .price(request.getPrice())
+                .name(model.getName())
+                .color(model.getColor())
+                .price(model.getPrice())
                 .horsepower(entity.getHorsepower())
                 .brand(entity.getBrand())
                 .productionDate(entity.getProductionDate())
                 .weight(entity.getWeight())
                 .motorcycleType(entity.getMotorcycleType())
                 .user(User.builder()
-                        .id(request.getUser().getId())
+                        .id(model.getUser().getId())
                         .build())
+                .version(model.getVersion())
+                .creationDateTime(entity.getCreationDateTime())
+                .lastUpdateDateTime(entity.getLastUpdateDateTime())
                 .build();
     }
 

@@ -12,18 +12,21 @@ import java.util.function.BiFunction;
 public class UpdateMotorcycleWithRequestFunction implements BiFunction<Motorcycle, PatchMotorcycleRequest, Motorcycle> {
 
     @Override
-    public Motorcycle apply(Motorcycle motorcycle, PatchMotorcycleRequest patchMotorcycleRequest) {
+    public Motorcycle apply(Motorcycle motorcycle, PatchMotorcycleRequest request) {
         return Motorcycle.builder()
                 .id(motorcycle.getId())
-                .name(patchMotorcycleRequest.getName())
-                .price(patchMotorcycleRequest.getPrice())
-                .color(patchMotorcycleRequest.getColor())
+                .name(request.getName())
+                .price(request.getPrice())
+                .color(request.getColor())
                 .horsepower(motorcycle.getHorsepower())
                 .brand(motorcycle.getBrand())
                 .productionDate(motorcycle.getProductionDate())
                 .weight(motorcycle.getWeight())
                 .motorcycleType(motorcycle.getMotorcycleType())
                 .user(motorcycle.getUser())
+                .version(request.getVersion())
+                .creationDateTime(motorcycle.getCreationDateTime())
+                .lastUpdateDateTime(motorcycle.getLastUpdateDateTime())
                 .build();
     }
 }

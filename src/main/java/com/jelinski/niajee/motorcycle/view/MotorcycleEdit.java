@@ -6,10 +6,13 @@ import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.model.MotorcycleEditModel;
 import com.jelinski.niajee.motorcycle.service.MotorcycleService;
 import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -88,10 +91,23 @@ public class MotorcycleEdit implements Serializable {
      *
      * @return navigation case to the same page
      */
-    public String saveAction() {
-        service.update(factory.updateMotorcycle().apply(service.find(id).orElseThrow(), motorcycle));
-        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        return viewId + "?faces-redirect=true&includeViewParams=true";
+    public String saveAction() throws IOException {
+        try {
+            service.update(factory.updateMotorcycle().apply(service.find(id).orElseThrow(), motorcycle));
+            String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+            return viewId + "?faces-redirect=true&includeViewParams=true";
+        } catch (EJBException ex) {
+            if (ex.getCause() instanceof OptimisticLockException) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Version collision."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Your previous version:"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Name - " + motorcycle.getName()));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Price - " + motorcycle.getPrice()));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Color - " + motorcycle.getColor()));
+                init();
+            }
+            return null;
+        }
+
     }
 
 }

@@ -32,6 +32,25 @@
                 </h:column>
 
                 <h:column>
+                    <f:facet name="header">Version</f:facet>
+                    <h:outputText value="#{motorcycle.version}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Created</f:facet>
+                    <h:outputText value="#{motorcycle.creationDateTime}">
+                        <f:convertDateTime type="localDateTime" pattern="yyyy-MM-dd HH:mm"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Last Updated</f:facet>
+                    <h:outputText value="#{motorcycle.lastUpdateDateTime}">
+                        <f:convertDateTime type="localDateTime" pattern="yyyy-MM-dd HH:mm"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
                     <f:facet name="header">#{msg['data.view']}</f:facet>
                     <h:link outcome="/motorcycle/motorcycle_view.xhtml" value="#{msg['data.view']}">
                         <f:param name="id" value="#{motorcycle.id}"/>

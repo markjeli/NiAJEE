@@ -1,5 +1,6 @@
 package com.jelinski.niajee.motorcycle.entity;
 
+import com.jelinski.niajee.entity.VersionAndCreationDateAuditable;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.user.entity.User;
 
@@ -24,7 +25,7 @@ import java.util.UUID;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "motorcycles")
-public class Motorcycle implements Serializable {
+public class Motorcycle extends VersionAndCreationDateAuditable implements Serializable {
     /**
      * Unique id (primary key).
      */

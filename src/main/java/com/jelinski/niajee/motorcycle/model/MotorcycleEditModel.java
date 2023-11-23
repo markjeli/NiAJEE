@@ -44,4 +44,9 @@ public class MotorcycleEditModel {
      */
     private UserModel user;
 
+    /**
+     * Motorcycle's version.
+     */
+    private Long version;
+
 }

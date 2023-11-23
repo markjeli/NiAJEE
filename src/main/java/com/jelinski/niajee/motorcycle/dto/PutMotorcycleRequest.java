@@ -55,4 +55,9 @@ public class PutMotorcycleRequest {
      */
     private int weight;
 
+    /**
+     * Motorcycle's version.
+     */
+    private Long version;
+
 }
