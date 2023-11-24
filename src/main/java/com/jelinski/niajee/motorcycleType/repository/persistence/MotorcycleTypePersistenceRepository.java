@@ -5,6 +5,9 @@ import com.jelinski.niajee.motorcycleType.repository.api.MotorcycleTypeRepositor
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +39,11 @@ public class MotorcycleTypePersistenceRepository implements MotorcycleTypeReposi
 
     @Override
     public List<MotorcycleType> findAll() {
-        return em.createQuery("select mt from MotorcycleType mt", MotorcycleType.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<MotorcycleType> query = cb.createQuery(MotorcycleType.class);
+        Root<MotorcycleType> root = query.from(MotorcycleType.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override

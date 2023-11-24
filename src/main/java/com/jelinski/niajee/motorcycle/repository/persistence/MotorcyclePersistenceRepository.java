@@ -1,6 +1,7 @@
 package com.jelinski.niajee.motorcycle.repository.persistence;
 
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
+import com.jelinski.niajee.motorcycle.entity.Motorcycle_;
 import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
 import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
 import com.jelinski.niajee.user.entity.User;
@@ -8,6 +9,9 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,18 +38,26 @@ public class MotorcyclePersistenceRepository implements MotorcycleRepository {
 
     @Override
     public List<Motorcycle> findAllByMotorcycleType(MotorcycleType motorcycleType) {
-        return em.createQuery("select m from Motorcycle m where m.motorcycleType = :motorcycleType", Motorcycle.class)
-                .setParameter("motorcycleType", motorcycleType)
-                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Motorcycle> query = cb.createQuery(Motorcycle.class);
+        Root<Motorcycle> root = query.from(Motorcycle.class);
+        query.select(root)
+                .where(cb.equal(root.get(Motorcycle_.motorcycleType), motorcycleType));
+        return em.createQuery(query).getResultList();
     }
 
     @Override
     public Optional<Motorcycle> findByIdAndUser(UUID id, User user) {
         try {
-            return Optional.of(em.createQuery("select m from Motorcycle m where m.id = :id and m.user = :user", Motorcycle.class)
-                    .setParameter("user", user)
-                    .setParameter("id", id)
-                    .getSingleResult());
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Motorcycle> query = cb.createQuery(Motorcycle.class);
+            Root<Motorcycle> root = query.from(Motorcycle.class);
+            query.select(root)
+                    .where(cb.and(
+                            cb.equal(root.get(Motorcycle_.id), id),
+                            cb.equal(root.get(Motorcycle_.user), user)
+                    ));
+            return Optional.of(em.createQuery(query).getSingleResult());
         } catch (NoResultException ex) {
             return Optional.empty();
         }
@@ -53,17 +65,25 @@ public class MotorcyclePersistenceRepository implements MotorcycleRepository {
 
     @Override
     public List<Motorcycle> findAllByMotorcycleTypeAndUser(MotorcycleType motorcycleType, User user) {
-        return em.createQuery("select m from Motorcycle m where m.motorcycleType = :motorcycleType and m.user = :user", Motorcycle.class)
-                .setParameter("user", user)
-                .setParameter("motorcycleType", motorcycleType)
-                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Motorcycle> query = cb.createQuery(Motorcycle.class);
+        Root<Motorcycle> root = query.from(Motorcycle.class);
+        query.select(root)
+                .where(cb.and(
+                        cb.equal(root.get(Motorcycle_.motorcycleType), motorcycleType),
+                        cb.equal(root.get(Motorcycle_.user), user)
+                ));
+        return em.createQuery(query).getResultList();
     }
 
     @Override
     public List<Motorcycle> findAllByUser(User user) {
-        return em.createQuery("select m from Motorcycle m where m.user = :user", Motorcycle.class)
-                .setParameter("user", user)
-                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Motorcycle> query = cb.createQuery(Motorcycle.class);
+        Root<Motorcycle> root = query.from(Motorcycle.class);
+        query.select(root)
+                .where(cb.equal(root.get(Motorcycle_.user), user));
+        return em.createQuery(query).getResultList();
     }
 
     @Override
@@ -73,7 +93,11 @@ public class MotorcyclePersistenceRepository implements MotorcycleRepository {
 
     @Override
     public List<Motorcycle> findAll() {
-        return em.createQuery("select m from Motorcycle m", Motorcycle.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Motorcycle> query = cb.createQuery(Motorcycle.class);
+        Root<Motorcycle> root = query.from(Motorcycle.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override
