@@ -1,5 +1,6 @@
 package com.jelinski.niajee.motorcycle.repository.persistence;
 
+import com.jelinski.niajee.motorcycle.entity.EnumMotorcycle;
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.entity.Motorcycle_;
 import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
@@ -13,6 +14,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -83,6 +85,36 @@ public class MotorcyclePersistenceRepository implements MotorcycleRepository {
         Root<Motorcycle> root = query.from(Motorcycle.class);
         query.select(root)
                 .where(cb.equal(root.get(Motorcycle_.user), user));
+        return em.createQuery(query).getResultList();
+    }
+
+    @Override
+    public List<Motorcycle> findAllFiltered(
+            String name,
+            int horsepower,
+            EnumMotorcycle.Color color,
+            EnumMotorcycle.Brand brand,
+            LocalDate productionDate,
+            int price,
+            int weight,
+            MotorcycleType motorcycleType,
+            User user
+    ) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Motorcycle> query = cb.createQuery(Motorcycle.class);
+        Root<Motorcycle> root = query.from(Motorcycle.class);
+        query.select(root)
+                .where(cb.and(
+                        cb.equal(root.get(Motorcycle_.name), name),
+                        cb.equal(root.get(Motorcycle_.horsepower), horsepower),
+                        cb.equal(root.get(Motorcycle_.color), color),
+                        cb.equal(root.get(Motorcycle_.brand), brand),
+                        cb.equal(root.get(Motorcycle_.productionDate), productionDate),
+                        cb.equal(root.get(Motorcycle_.price), price),
+                        cb.equal(root.get(Motorcycle_.weight), weight),
+                        cb.equal(root.get(Motorcycle_.motorcycleType), motorcycleType),
+                        cb.equal(root.get(Motorcycle_.user), user)
+                ));
         return em.createQuery(query).getResultList();
     }
 

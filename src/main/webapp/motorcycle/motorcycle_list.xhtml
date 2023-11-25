@@ -19,6 +19,113 @@
                 <div><h:outputText value="#{motorcycleList.motorcycleTypeDescription}"/></div>
             </header>
 
+            <h:form styleClass="container"
+                    id="motorcycleFilterForm"
+                    enctype="multipart/form-data"
+                    onreset="onReset()"
+                    rendered="#{motorcycleList.motorcycleTypeId == null}">
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="name" value="#{motorcycleList.motorcycleFilter.name}" styleClass="form-control"/>
+                            <h:outputLabel for="name" value="#{msg['data.name']}:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="horsepower" value="#{motorcycleList.motorcycleFilter.horsepower}" styleClass="form-control"/>
+                            <h:outputLabel for="horsepower" value="#{msg['data.horsepower']}:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="price" value="#{motorcycleList.motorcycleFilter.price}" styleClass="form-control"/>
+                            <h:outputLabel for="price" value="#{msg['data.price']}:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="weight" value="#{motorcycleList.motorcycleFilter.weight}" styleClass="form-control"/>
+                            <h:outputLabel for="weight" value="#{msg['data.weight']}:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="productionDate" value="#{motorcycleList.motorcycleFilter.productionDate}" styleClass="form-control">
+                                <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                            </h:inputText>
+                            <h:outputLabel for="productionDate" value="#{msg['data.productionDate']}:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            #{msg['data.color']}:
+                            <h:selectOneMenu value="#{motorcycleList.motorcycleFilter.color}">
+                                <f:selectItems value="#{motorcycleList.colors}" />
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            #{msg['data.brand']}:
+                            <h:selectOneMenu value="#{motorcycleList.motorcycleFilter.brand}">
+                                <f:selectItems value="#{motorcycleList.brands}" />
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <fieldset>
+                            <legend class="form-label fs-6">#{msg['data.motorcycleType']}:</legend>
+                            <h:selectOneMenu value="#{motorcycleList.motorcycleFilter.motorcycleType}">
+                                <f:selectItems value="#{motorcycleList.motorcycleTypes}" var="motorcycleType" itemValue="#{motorcycleType}" itemLabel="#{motorcycleType.typeName}"/>
+                            </h:selectOneMenu>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <fieldset>
+                            <legend class="form-label fs-6">#{msg['data.users']}:</legend>
+                            <h:selectOneMenu value="#{motorcycleList.motorcycleFilter.user}">
+                                <f:selectItems value="#{motorcycleList.users}" var="user" itemValue="#{user}" itemLabel="#{user.login}"/>
+                            </h:selectOneMenu>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-primary" value="Search"
+                                         action="#{motorcycleList.filter()}">
+                            <f:ajax execute=":motorcycleFilterForm" render=":motorcycleTable"/>
+                        </h:commandButton>
+                    </div>
+                </div>
+            </h:form>
+
             <h:dataTable id="motorcycleTable" value="#{motorcycleList.motorcycles.motorcycles}" var="motorcycle"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
                 <h:column>

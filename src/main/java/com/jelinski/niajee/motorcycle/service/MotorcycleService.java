@@ -1,5 +1,6 @@
 package com.jelinski.niajee.motorcycle.service;
 
+import com.jelinski.niajee.motorcycle.entity.EnumMotorcycle;
 import com.jelinski.niajee.motorcycle.entity.Motorcycle;
 import com.jelinski.niajee.motorcycle.interceptor.binding.LogMethodCall;
 import com.jelinski.niajee.motorcycle.repository.api.MotorcycleRepository;
@@ -17,6 +18,7 @@ import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -131,6 +133,31 @@ public class MotorcycleService {
     public Optional<List<Motorcycle>> findAllByUser(UUID id) {
         return userRepository.find(id)
                 .map(motorcycleRepository::findAllByUser);
+    }
+
+    @RolesAllowed(UserRoles.USER)
+    public List<Motorcycle> findAllFiltered(
+            String name,
+            int horsepower,
+            EnumMotorcycle.Color color,
+            EnumMotorcycle.Brand brand,
+            LocalDate productionDate,
+            int price,
+            int weight,
+            MotorcycleType motorcycleType,
+            User user
+    ) {
+        return motorcycleRepository.findAllFiltered(
+                name,
+                horsepower,
+                color,
+                brand,
+                productionDate,
+                price,
+                weight,
+                motorcycleType,
+                user
+        );
     }
 
     /**
