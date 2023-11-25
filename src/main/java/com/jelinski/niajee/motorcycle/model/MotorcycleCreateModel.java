@@ -1,8 +1,12 @@
 package com.jelinski.niajee.motorcycle.model;
 
 import com.jelinski.niajee.motorcycle.entity.EnumMotorcycle;
-import com.jelinski.niajee.motorcycleType.entity.MotorcycleType;
+import com.jelinski.niajee.motorcycle.validation.binding.ValidMotorcyclePrice;
 import com.jelinski.niajee.motorcycleType.model.MotorcycleTypeModel;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,41 +40,54 @@ public class MotorcycleCreateModel {
     /**
      * Motorcycle's name.
      */
+    @NotBlank
     private String name;
 
     /**
      * Motorcycle's horsepower.
      */
+    @Min(1)
+    @NotNull
     private int horsepower;
 
     /**
      * Motorcycle's color.
      */
+    @NotNull
     private EnumMotorcycle.Color color;
 
     /**
      * Motorcycle's brand.
      */
+    @NotNull
     private EnumMotorcycle.Brand brand;
 
     /**
      * Motorcycle's production date.
      */
+    @Past
+    @NotNull
     private LocalDate productionDate;
 
     /**
      * Motorcycle's price.
      */
+    @Min(1)
+    @NotNull
+    @ValidMotorcyclePrice
     private int price;
 
     /**
      * Motorcycle's weight.
      */
+    @Min(1)
+    @NotNull
     private int weight;
 
     /**
      * Motorcycle's type.
      */
+    @NotNull
     private MotorcycleTypeModel motorcycleType;
 
 }

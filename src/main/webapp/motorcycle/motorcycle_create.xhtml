@@ -13,13 +13,16 @@
         <f:loadBundle var="msg" basename="com.jelinski.niajee.motorcycle.view.i18n.messages"/>
         <article>
             <header><h2>#{msg['header.create']}</h2></header>
-            <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
+            <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data" id="form">
 
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="name" value="#{motorcycleCreate.motorcycle.name}" styleClass="form-control"/>
+                            <h:inputText id="name" value="#{motorcycleCreate.motorcycle.name}" required="true"
+                                         binding="#{nameInput}"
+                                         styleClass="#{nameInput.valid ? 'form-control' : 'is-invalid form-control'}"/>
                             <h:outputLabel for="name" value="#{msg['data.name']}:" styleClass="form-label"/>
+                            <h:message for="name" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -27,8 +30,11 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="horsepower" value="#{motorcycleCreate.motorcycle.horsepower}" styleClass="form-control"/>
+                            <h:inputText id="horsepower" value="#{motorcycleCreate.motorcycle.horsepower}" required="true"
+                                         binding="#{horsepowerInput}"
+                                         styleClass="#{horsepowerInput.valid ? 'form-control' : 'is-invalid form-control'}"/>
                             <h:outputLabel for="horsepower" value="#{msg['data.horsepower']}:" styleClass="form-label"/>
+                            <h:message for="horsepower" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -36,8 +42,11 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="price" value="#{motorcycleCreate.motorcycle.price}" styleClass="form-control"/>
+                            <h:inputText id="price" value="#{motorcycleCreate.motorcycle.price}" required="true"
+                                         binding="#{priceInput}"
+                                         styleClass="#{priceInput.valid ? 'form-control' : 'is-invalid form-control'}"/>
                             <h:outputLabel for="price" value="#{msg['data.price']}:" styleClass="form-label"/>
+                            <h:message for="price" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -45,8 +54,11 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="weight" value="#{motorcycleCreate.motorcycle.weight}" styleClass="form-control"/>
+                            <h:inputText id="weight" value="#{motorcycleCreate.motorcycle.weight}" required="true"
+                                         binding="#{weightInput}"
+                                         styleClass="#{weightInput.valid ? 'form-control' : 'is-invalid form-control'}"/>
                             <h:outputLabel for="weight" value="#{msg['data.weight']}:" styleClass="form-label"/>
+                            <h:message for="weight" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -54,10 +66,13 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="productionDate" value="#{motorcycleCreate.motorcycle.productionDate}" styleClass="form-control">
+                            <h:inputText id="productionDate" value="#{motorcycleCreate.motorcycle.productionDate}" required="true"
+                                         binding="#{productionDateInput}"
+                                         styleClass="#{productionDateInput.valid ? 'form-control' : 'is-invalid form-control'}">
                                 <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
                             </h:inputText>
                             <h:outputLabel for="productionDate" value="#{msg['data.productionDate']}:" styleClass="form-label"/>
+                            <h:message for="productionDate" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -66,9 +81,12 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             #{msg['data.color']}:
-                            <h:selectOneMenu value="#{motorcycleCreate.motorcycle.color}">
+                            <h:selectOneMenu id="color" value="#{motorcycleCreate.motorcycle.color}" required="true"
+                                             binding="#{colorInput}"
+                                             styleClass="#{colorInput.valid ? '' : 'is-invalid form-control'}">
                                 <f:selectItems value="#{motorcycleCreate.colors}" />
                             </h:selectOneMenu>
+                            <h:message for="color" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -77,9 +95,12 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             #{msg['data.brand']}:
-                            <h:selectOneMenu value="#{motorcycleCreate.motorcycle.brand}">
+                            <h:selectOneMenu id="brand" value="#{motorcycleCreate.motorcycle.brand}" required="true"
+                                                binding="#{brandInput}"
+                                                styleClass="#{brandInput.valid ? '' : 'is-invalid form-control'}">
                                 <f:selectItems value="#{motorcycleCreate.brands}" />
                             </h:selectOneMenu>
+                            <h:message for="brand" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -88,21 +109,13 @@
                     <div class="col-4 p-2">
                         <fieldset>
                             <legend class="form-label fs-6">#{msg['data.motorcycleType']}:</legend>
-                            <!-- Instead of ui:repeat the h:selectOneRadio with f:selectItems can be used but then
-                            Faces renders table or list and custom styling with CSS libraties can be troublesome. -->
-<!--                            <ui:repeat value="#{motorcycleCreate.motorcycleTypes}" var="motorcycleType">-->
-<!--                                <div class="form-check">-->
-<!--                                    <h:selectOneRadio id="radioId" group="motorcycleeType"-->
-<!--                                                      value="#{motorcycleCreate.motorcycle.motorcycleType}"-->
-<!--                                                      styleClass="form-check-input"-->
-<!--                                                      enabledClass="form-check-label">-->
-<!--                                        <f:selectItem itemValue="#{motorcycleType}" itemLabel="#{motorcycleType.typeName}"/>-->
-<!--                                    </h:selectOneRadio>-->
-<!--                                </div>-->
-<!--                            </ui:repeat>-->
-                            <h:selectOneMenu value="#{motorcycleCreate.motorcycle.motorcycleType}">
+                            <h:selectOneMenu id="motorcycleType"
+                                             value="#{motorcycleCreate.motorcycle.motorcycleType}"
+                                             binding="#{motorcycleTypeInput}"
+                                             styleClass="#{motorcycleTypeInput.valid ? '' : 'is-invalid form-control'}">
                                 <f:selectItems value="#{motorcycleCreate.motorcycleTypes}" var="motorcycleType" itemValue="#{motorcycleType}" itemLabel="#{motorcycleType.typeName}"/>
                             </h:selectOneMenu>
+                            <h:message for="motorcycleType" styleClass="invalid-feedback"/>
                         </fieldset>
                     </div>
                 </div>

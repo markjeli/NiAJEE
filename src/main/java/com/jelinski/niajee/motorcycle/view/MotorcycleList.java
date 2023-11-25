@@ -193,13 +193,7 @@ public class MotorcycleList implements Serializable {
                         motorcycleFilter.getPrice(),
                         motorcycleFilter.getWeight(),
                         motorcycleTypeService.find(motorcycleFilter.getMotorcycleType().getId()).get(),
-//                        MotorcycleType.builder()
-//                                .id(motorcycleFilter.getMotorcycleType().getId())
-//                                .build(),
                         userService.find(motorcycleFilter.getUser().getId()).get()
-//                        User.builder()
-//                                .id(motorcycleFilter.getUser().getId())
-//                                .build()
                 )
         );
         if (motorcycles != null && motorcycles.getMotorcycles().isEmpty()) {
